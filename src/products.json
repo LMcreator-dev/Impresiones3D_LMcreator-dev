@@ -12,4 +12,17 @@
     "color": "#9a765e",
     "rotationDegrees": [-90, 0, 0]
   }
+  {
+    "id": "GTA6",
+    "name": "GTA 6",
+    "category": "figuras",
+    "tag": "FIGURA · COLECCIÓN",
+    "price": "",
+    "description": "Un obsequio para los fanáticos de la saga Grand Theft Auto, con un diseño que captura la esencia del juego.",
+    "model": "models/2_GTA6-simplified.stl",
+    "thumbnail": "images/GTA6.png",
+    "shape": "GTA6",
+    "color": "#9a765e",
+    "rotationDegrees": [-90, 0, 0]
+  }
 ]
