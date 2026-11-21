@@ -7,9 +7,19 @@ import './style.css';
 
 const grid = document.querySelector('#product-grid');
 const viewerEl = document.querySelector('#three-viewer');
+const viewerHint = document.querySelector('#viewer-hint');
 const whatsappNumber = '34624010211'; // Sustituye por tu número, con prefijo internacional y sin +
 let activeProduct = products[0];
 let scene, camera, renderer, controls, currentModel;
+
+function updateViewerHint() {
+  if (!viewerHint) return;
+  viewerHint.textContent = window.matchMedia('(pointer: coarse)').matches
+    ? 'Arrastra para girar · Pellizca para acercar'
+    : 'Arrastra para girar · Desplaza para acercar';
+}
+updateViewerHint();
+window.addEventListener('resize', updateViewerHint);
 
 function makeWhatsApp(message) { return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`; }
 document.querySelector('#custom-whatsapp').href = makeWhatsApp('Hola, me gustaría consultar un encargo personalizado de impresión 3D.');
@@ -20,7 +30,7 @@ function productCard(p, index) {
     ? `<img class="product-thumbnail" src="${import.meta.env.BASE_URL}${p.thumbnail}" alt="Vista de ${p.name}">`
     : `<span class="mini-piece mini-${p.shape}"><i></i></span>`;
   return `<article class="product-card" style="--piece:${p.color};--delay:${index * 70}ms">
-    <button class="product-visual" data-open="${p.id}" aria-label="Ver ${p.name} en 3D"><span class="visual-index">0${index+1}</span>${visual}<span class="visual-open">↗</span></button>
+    <button class="product-visual" data-open="${p.id}" aria-label="Ver ${p.name} en 3D"><span class="visual-index">0${index+1}</span>${visual}<span class="visual-open">Ver en 3D <span aria-hidden="true">↗</span></span></button>
     <div class="product-info"><div><span class="product-tag">${p.tag}</span><h3>${p.name}</h3></div><span class="product-price">${p.price}</span></div>
     <p class="product-description">${p.description}</p><button class="product-order" data-order="${p.id}">Solicitar presupuesto <span>⟶</span></button>
   </article>`;
