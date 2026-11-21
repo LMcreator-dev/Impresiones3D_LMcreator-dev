@@ -1,56 +1,70 @@
 [
   {
-    "id": "MascaraSamurai",
+    "id": "1_Mascara_Samurai-simplified",
     "name": "Mascara de Samurai",
     "category": "figuras",
     "tag": "FIGURA · COLECCIÓN",
     "price": "",
     "description": "Una pequeña presencia escultórica con carácter propio.",
     "model": "models/1_Mascara_Samurai-simplified.stl",
-    "thumbnail": "images/mascara-samurai.png",
-    "shape": "MascaraSamurai",
+    "thumbnail": "images/1_Mascara_Samurai-simplified.png",
+    "shape": "1_Mascara_Samurai-simplified",
     "color": "#9a765e",
     "rotationDegrees": [-90, 0, 0]
   }
   ,
   {
-    "id": "GTA6",
+    "id": "2_GTA_6-simplified",
     "name": "GTA 6",
     "category": "decoracion",
     "tag": "DECORACIÓN · COLECCIÓN",
     "price": "",
     "description": "Un obsequio para los fanáticos de la saga Grand Theft Auto, con un diseño que captura la esencia del juego.",
     "model": "models/2_GTA_6-simplified.stl",
-    "thumbnail": "images/gta6.png",
-    "shape": "GTA6",
+    "thumbnail": "images/2_GTA_6-simplified.png",
+    "shape": "2_GTA_6-simplified",
     "color": "#9a765e",
     "rotationDegrees": [-90, 0, 0]
   }
   ,
   {
-    "id": "MarioBros_Bala",
+    "id": "3_MarioBros_Bala-simplified",
     "name": "MarioBros Bala",
     "category": "decoracion",
     "tag": "DECORACIÓN · COLECCIÓN",
     "price": "",
     "description": "Una figura que representa la icónica bala de Mario Bros, perfecta para los fanáticos del videojuego.",
     "model": "models/3_MarioBros_Bala-simplified.stl",
-    "thumbnail": "images/mariobros_bala.png",
-    "shape": "MarioBros_Bala",
+    "thumbnail": "images/3_MarioBros_Bala-simplified.png",
+    "shape": "3_MarioBros_Bala-simplified",
     "color": "#9a765e",
-    "rotationDegrees": [0, 0, 0]
+    "rotationDegrees": [-90, 0, 0]
   }
   ,
   {
-    "id": "FantasmaCapa",
+    "id": "4_Fantasma_capa-simplified",
     "name": "Fantasma Capa",
     "category": "figuras",
     "tag": "FIGURA · COLECCIÓN",
     "price": "",
     "description": "Una figura que representa un fantasma con capa, ideal para los amantes de lo paranormal y lo misterioso.",
     "model": "models/4_Fantasma_capa-simplified.stl",
-    "thumbnail": "images/fantasma_capa.png",
-    "shape": "FantasmaCapa",
+    "thumbnail": "images/4_Fantasma_capa-simplified.png",
+    "shape": "4_Fantasma_capa-simplified",
+    "color": "#9a765e",
+    "rotationDegrees": [0, 0, 0]
+  }
+  ,
+  {
+    "id": "5_Trio_Mascaras_Geometricas_Japonesas",
+    "name": "Trio de Mascaras Geométricas Japonesas",
+    "category": "figuras",
+    "tag": "FIGURA · COLECCIÓN",
+    "price": "",
+    "description": "Un conjunto de tres máscaras geométricas con un estilo japonés, perfecto para coleccionistas de arte decorativo.",
+    "model": "models/5_Trio_Mascaras_Geometricas_Japonesas-simplified.stl",
+    "thumbnail": "images/5_Trio_Mascaras_Geometricas_Japonesas.png",
+    "shape": "5_Trio_Mascaras_Geometricas_Japonesas",
     "color": "#9a765e",
     "rotationDegrees": [0, 0, 0]
   }
