@@ -36,6 +36,14 @@ function productCard(p, index) {
   </article>`;
 }
 function renderProducts(filter='todos') {
+  document.querySelectorAll('.filter').forEach(button => {
+    const category = button.dataset.filter;
+    const count = category === 'todos'
+      ? products.length
+      : products.filter(p => p.category === category).length;
+    const counter = button.querySelector('sup');
+    if (counter) counter.textContent = String(count).padStart(2, '0');
+  });
   const items = products.filter(p => filter === 'todos' || p.category === filter);
   grid.innerHTML = items.map(productCard).join('');
   grid.querySelectorAll('[data-open]').forEach(el => el.addEventListener('click', () => selectProduct(el.dataset.open)));
