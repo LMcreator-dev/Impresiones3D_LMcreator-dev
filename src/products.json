@@ -38,7 +38,7 @@
     "thumbnail": "images/3_MarioBros_Bala-simplified.png",
     "shape": "3_MarioBros_Bala-simplified",
     "color": "#9a765e",
-    "rotationDegrees": [-90, 0, 0]
+    "rotationDegrees": [90, 0, 0]
   }
   ,
   {
