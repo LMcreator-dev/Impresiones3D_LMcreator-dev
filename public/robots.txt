@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lmcreator-dev.github.io/Impresiones3D_LMcreator-dev/sitemap.xml
