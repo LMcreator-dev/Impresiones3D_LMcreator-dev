@@ -34,7 +34,7 @@
     "tag": "DECORACIÓN · COLECCIÓN",
     "price": "",
     "description": "Una figura que representa la icónica bala de Mario Bros, perfecta para los fanáticos del videojuego.",
-    "model": "models/4_Fantasma_Capa-simplified.stl",
+    "model": "models/3_MarioBros_Bala-simplified.stl",
     "thumbnail": "images/mariobros_bala.png",
     "shape": "MarioBros_Bala",
     "color": "#9a765e",
