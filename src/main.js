@@ -16,8 +16,11 @@ document.querySelector('#custom-whatsapp').href = makeWhatsApp('Hola, me gustar�
 document.querySelector('#review-whatsapp').href = makeWhatsApp('Hola, me gustaría compartir mi opinión sobre una pieza que he encargado.');
 
 function productCard(p, index) {
+  const visual = p.thumbnail
+    ? `<img class="product-thumbnail" src="${import.meta.env.BASE_URL}${p.thumbnail}" alt="Vista de ${p.name}">`
+    : `<span class="mini-piece mini-${p.shape}"><i></i></span>`;
   return `<article class="product-card" style="--piece:${p.color};--delay:${index * 70}ms">
-    <button class="product-visual" data-open="${p.id}" aria-label="Ver ${p.name} en 3D"><span class="visual-index">0${index+1}</span><span class="mini-piece mini-${p.shape}"><i></i></span><span class="visual-open">↗</span></button>
+    <button class="product-visual" data-open="${p.id}" aria-label="Ver ${p.name} en 3D"><span class="visual-index">0${index+1}</span>${visual}<span class="visual-open">↗</span></button>
     <div class="product-info"><div><span class="product-tag">${p.tag}</span><h3>${p.name}</h3></div><span class="product-price">${p.price}</span></div>
     <p class="product-description">${p.description}</p><button class="product-order" data-order="${p.id}">Solicitar presupuesto <span>⟶</span></button>
   </article>`;
