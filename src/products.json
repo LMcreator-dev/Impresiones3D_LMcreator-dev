@@ -38,6 +38,6 @@
     "thumbnail": "images/mariobros_bala.png",
     "shape": "MarioBros_Bala",
     "color": "#9a765e",
-    "rotationDegrees": [-90, 0, 0]
+    "rotationDegrees": [0, 0, 0]
   }
 ]
