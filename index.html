@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#171512" />
+    <meta name="description" content="Piezas, figuras y objetos impresos en 3D. Explora cada pieza en un visor 3D interactivo y encarga la tuya." />
+    <title>ATELIER — Objetos con otra dimensión</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="wordmark" href="#inicio" aria-label="Atelier inicio"><span class="mark">A</span><span>ATELIER<small>OBJETOS EN TRES DIMENSIONES</small></span></a>
+        <nav><a href="#coleccion">Colección</a><a href="#encargos">Encargos</a><a href="#opiniones">Opiniones</a></nav>
+        <a class="top-cta" href="#coleccion">Explorar piezas <span>↗</span></a>
+      </header>
+
+      <main>
+        <section class="hero" id="inicio">
+          <div class="hero-copy">
+            <div class="eyebrow"><span></span> DISEÑO · MATERIA · IMPRESIÓN 3D</div>
+            <h1>Pequeñas obras.<br><em>Otras dimensiones.</em></h1>
+            <p class="hero-text">Objetos que empiezan en una idea y toman forma capa a capa. Explora la colección, gira cada pieza y encuentra la próxima que será tuya.</p>
+            <a class="text-link" href="#coleccion">Descubrir la colección <span>⟶</span></a>
+            <div class="hero-foot"><span>01 / 03</span><i></i><span>HECHO PARA MIRAR DE CERCA</span></div>
+          </div>
+          <div class="hero-art">
+            <div class="ornament ornament-one">✳</div><div class="ornament ornament-two">✳</div>
+            <div class="hero-frame"><div class="frame-corner tl"></div><div class="frame-corner tr"></div><div class="frame-corner bl"></div><div class="frame-corner br"></div>
+              <div class="hero-halo"></div><div class="hero-object" aria-hidden="true"><div class="hero-object-core">✺</div></div>
+              <div class="hero-caption"><span>ESTUDIO DE FORMAS</span><span>VOL. I — 2026</span></div>
+            </div>
+            <div class="vertical-note">FORMAS QUE COBRAN VIDA · FORMAS QUE COBRAN VIDA ·</div>
+          </div>
+          <div class="hero-bottom"><span>HECHO CON INTENCIÓN</span><span class="scroll-cue">DESLIZA PARA EXPLORAR ↓</span><span>EST. MMXXVI</span></div>
+        </section>
+
+        <section class="intro-strip"><span class="strip-star">✳</span><p>No es producción en serie. <em>Es diseño que puedes tocar.</em></p><span class="strip-star">✳</span></section>
+
+        <section class="collection section-pad" id="coleccion">
+          <div class="section-heading"><div><div class="eyebrow"><span></span> EL GABINETE DE CURIOSIDADES</div><h2>La colección<span class="gold-dot">.</span></h2></div><p>Una selección de figuras, objetos y piezas funcionales. Cada una, lista para contemplar desde todos sus ángulos.</p></div>
+          <div class="filter-row" id="filters"><button class="filter active" data-filter="todos">Todo <sup>06</sup></button><button class="filter" data-filter="figuras">Figuras</button><button class="filter" data-filter="decoracion">Decoración</button><button class="filter" data-filter="funcional">Funcional</button></div>
+          <div class="product-grid" id="product-grid"></div>
+        </section>
+
+        <section class="viewer-section" id="visor">
+          <div class="viewer-heading"><div class="eyebrow"><span></span> OBSERVA SIN LÍMITES</div><h2>La pieza, <em>en tus manos.</em></h2><p>Arrastra para girar · Desplaza para acercar</p></div>
+          <div class="viewer-shell"><div class="viewer-meta"><span id="viewer-name">Forma orgánica Nº 01</span><span>VISOR INTERACTIVO / 3D</span></div><div id="three-viewer" class="three-viewer"><div class="viewer-loading">Preparando la pieza…</div><div class="viewer-crosshair">✳</div></div><div class="viewer-controls"><span>360°</span><span>ARRASTRA PARA EXPLORAR</span><button id="reset-view" aria-label="Restablecer vista">↺</button></div></div>
+          <div class="viewer-note">Cada modelo del catálogo podrá incorporar su archivo STL o 3MF para que puedas examinarlo aquí antes de encargarlo.</div>
+        </section>
+
+        <section class="custom-section section-pad" id="encargos"><div class="custom-ornament">✳</div><div class="custom-content"><div class="eyebrow"><span></span> UNA IDEA, TUYA</div><h2>¿Y si todavía<br><em>no existe?</em></h2><p>Cuéntanos qué tienes en mente. Una figura especial, una pieza que no encuentras o un diseño hecho a tu medida. Lo estudiamos contigo y le damos forma.</p><a class="gold-link" id="custom-whatsapp" href="#">Cuéntanos tu idea <span>↗</span></a></div><div class="custom-side"><span class="side-number">02</span><span class="side-label">DISEÑO A MEDIDA<br>IMPRESIÓN BAJO PEDIDO</span></div></section>
+
+        <section class="reviews-section section-pad" id="opiniones"><div class="section-heading"><div><div class="eyebrow"><span></span> PALABRAS QUE DEJAN HUELLA</div><h2>Lo que cuentan<span class="gold-dot">.</span></h2></div><p>Las mejores piezas no terminan al salir de la impresora: empiezan cuando llegan a su nuevo hogar.</p></div><div class="review-layout"><div class="review-quote"><div class="quote-mark">“</div><blockquote>El detalle y el acabado superaron lo que esperaba. Se nota el cuidado detrás de cada pieza.</blockquote><div class="review-author">— CLIENTE DE LA CASA <span>★★★★★</span></div></div><div class="review-invite"><span class="review-seal">✳</span><h3>¿Ya tienes<br>una pieza nuestra?</h3><p>Nos encantará conocer tu experiencia. Escríbenos y comparte tu opinión.</p><a id="review-whatsapp" class="text-link" href="#">Compartir opinión <span>⟶</span></a></div></div></section>
+      </main>
+
+      <footer class="footer"><a class="wordmark" href="#inicio"><span class="mark">A</span><span>ATELIER<small>OBJETOS EN TRES DIMENSIONES</small></span></a><p>Diseñado con intención. Impreso capa a capa.</p><span>© 2026 ATELIER 3D</span></footer>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
