@@ -32,7 +32,7 @@ function productCard(p, index) {
   return `<article class="product-card" style="--piece:${p.color};--delay:${index * 70}ms">
     <button class="product-visual" data-open="${p.id}" aria-label="Ver ${p.name} en 3D"><span class="visual-index">0${index+1}</span>${visual}<span class="visual-open">Ver en 3D</span></button>
     <div class="product-info"><div><span class="product-tag">${p.tag}</span><h3>${p.name}</h3></div><span class="product-price">${p.price}</span></div>
-    <p class="product-description">${p.description}</p><button class="product-order" data-order="${p.id}">Solicitar presupuesto <span>⟶</span></button>
+    <p class="product-description">${p.description}</p><button class="product-order" data-order="${p.id}">Solicitar presupuesto</button>
   </article>`;
 }
 function renderProducts(filter='todos') {
