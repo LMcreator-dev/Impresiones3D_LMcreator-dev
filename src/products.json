@@ -48,7 +48,7 @@
     "tag": "FIGURA · COLECCIÓN",
     "price": "",
     "description": "Una figura que representa un fantasma con capa, ideal para los amantes de lo paranormal y lo misterioso.",
-    "model": "models/4_Fantasma_Capa-simplified.stl",
+    "model": "models/4_Fantasma_capa-simplified.stl",
     "thumbnail": "images/fantasma_capa.png",
     "shape": "FantasmaCapa",
     "color": "#9a765e",
