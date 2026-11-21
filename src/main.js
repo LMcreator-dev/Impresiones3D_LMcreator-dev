@@ -7,7 +7,7 @@ import './style.css';
 
 const grid = document.querySelector('#product-grid');
 const viewerEl = document.querySelector('#three-viewer');
-const whatsappNumber = '34600000000'; // Sustituye por tu número, con prefijo internacional y sin +
+const whatsappNumber = '34624010211'; // Sustituye por tu número, con prefijo internacional y sin +
 let activeProduct = products[0];
 let scene, camera, renderer, controls, currentModel;
 
