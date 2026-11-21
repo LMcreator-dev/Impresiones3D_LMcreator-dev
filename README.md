@@ -15,7 +15,7 @@ npm run dev
 ## Personalización obligatoria antes de publicar
 1. Abre `src/main.js` y cambia `whatsappNumber` por tu número en formato internacional, sin `+`, espacios ni guiones. Ejemplo: `346XXXXXXXX`.
 2. En GitHub: Settings → Pages → Build and deployment → selecciona **GitHub Actions**.
-4. Sube el proyecto a la rama `main`. El workflow compilará y publicará la web.
+3. Sube el proyecto a la rama `main`. El workflow compilará y publicará la web automáticamente en [lmcreator-dev.github.io/Impresiones3D_LMcreator-dev](https://lmcreator-dev.github.io/Impresiones3D_LMcreator-dev/).
 
 ## Añadir productos
 Edita `src/products.json` y añade un objeto con estos campos:
@@ -27,13 +27,13 @@ Edita `src/products.json` y añade un objeto con estos campos:
   "tag": "FIGURA · COLECCIÓN",
   "price": "Desde 10 €",
   "description": "Descripción breve.",
-  "model": "/models/mi-figura.stl",
+  "model": "models/mi-figura.stl",
   "shape": "totem",
   "color": "#9a765e"
 }
 ```
 Categorías: `figuras`, `decoracion`, `funcional`.
-Formatos de visor: `.stl` y `.3mf`. Guarda los archivos dentro de `public/models/` y utiliza rutas como `/models/archivo.stl`.
+Formatos de visor: `.stl` y `.3mf`. Guarda los archivos dentro de `public/models/` y utiliza rutas relativas como `models/archivo.stl`.
 
 Si `model` está vacío, el visor muestra una forma 3D de demostración generada en el navegador. Las miniaturas actuales son ilustraciones CSS temporales: sustitúyelas por fotografías/renderizados de tus piezas cuando los tengas.
 

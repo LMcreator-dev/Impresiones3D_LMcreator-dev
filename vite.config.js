@@ -1,2 +1,4 @@
 import { defineConfig } from 'vite';
-export default defineConfig({ base: process.env.VITE_BASE_PATH || '/', });
+
+// This repository is published as a GitHub Pages project site.
+export default defineConfig({ base: '/Impresiones3D_LMcreator-dev/' });

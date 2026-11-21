@@ -83,7 +83,7 @@ function loadProduct(p) {
   if(currentModel){scene.remove(currentModel); currentModel.traverse(o=>{if(o.geometry)o.geometry.dispose();});}
   if(p.model) {
     const ext=p.model.split('.').pop().toLowerCase(); const loader=ext==='3mf'?new ThreeMFLoader():new STLLoader();
-    loader.load(p.model, result=>{
+    loader.load(`${import.meta.env.BASE_URL}${p.model.replace(/^\//, '')}`, result=>{
       if(ext==='stl'){const mesh=new THREE.Mesh(result,new THREE.MeshStandardMaterial({color:p.color,metalness:.12,roughness:.42})); currentModel=mesh;} else currentModel=result;
       fitModel(currentModel);
     },undefined,()=>{currentModel=proceduralModel(p);fitModel(currentModel);});
