@@ -19,7 +19,7 @@ function productCard(p, index) {
   return `<article class="product-card" style="--piece:${p.color};--delay:${index * 70}ms">
     <button class="product-visual" data-open="${p.id}" aria-label="Ver ${p.name} en 3D"><span class="visual-index">0${index+1}</span><span class="mini-piece mini-${p.shape}"><i></i></span><span class="visual-open">↗</span></button>
     <div class="product-info"><div><span class="product-tag">${p.tag}</span><h3>${p.name}</h3></div><span class="product-price">${p.price}</span></div>
-    <p class="product-description">${p.description}</p><button class="product-order" data-order="${p.id}">Consultar esta pieza <span>⟶</span></button>
+    <p class="product-description">${p.description}</p><button class="product-order" data-order="${p.id}">Solicitar presupuesto <span>⟶</span></button>
   </article>`;
 }
 function renderProducts(filter='todos') {
@@ -28,7 +28,7 @@ function renderProducts(filter='todos') {
   grid.querySelectorAll('[data-open]').forEach(el => el.addEventListener('click', () => selectProduct(el.dataset.open)));
   grid.querySelectorAll('[data-order]').forEach(el => el.addEventListener('click', () => {
     const p = products.find(x => x.id === el.dataset.order);
-    window.open(makeWhatsApp(`Hola, estoy interesado/a en ${p.name}. ¿Podrías darme más información y presupuesto?`), '_blank', 'noopener');
+    window.open(makeWhatsApp(`Hola, he visto ${p.name} y me gustaría pedir presupuesto. ¿Me podrías pasar precio?`), '_blank', 'noopener');
   }));
 }
 document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click', () => {
@@ -80,6 +80,7 @@ function proceduralModel(p) {
 function loadProduct(p) {
   if(!scene) return;
   activeProduct=p; document.querySelector('#viewer-name').textContent=p.name;
+  document.querySelector('#viewer-order').href = makeWhatsApp(`Hola, he visto ${p.name} y me gustaría pedir presupuesto. ¿Me podrías pasar precio?`);
   if(currentModel){scene.remove(currentModel); currentModel.traverse(o=>{if(o.geometry)o.geometry.dispose();});}
   if(p.model) {
     const ext=p.model.split('.').pop().toLowerCase(); const loader=ext==='3mf'?new ThreeMFLoader():new STLLoader();

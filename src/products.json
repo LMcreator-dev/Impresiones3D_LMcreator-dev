@@ -1,8 +1,80 @@
 [
-  {"id":"dragon","name":"Dragón articulado","category":"figuras","tag":"FIGURA · ARTICULADA","price":"Desde 14 €","description":"Una criatura fantástica, articulada y llena de pequeños detalles.","model":"","shape":"dragon","color":"#b66d45","featured":true},
-  {"id":"bloom","name":"Flor eterna","category":"decoracion","tag":"DECORACIÓN · ORGÁNICA","price":"Desde 9 €","description":"Una forma botánica convertida en objeto para conservar.","model":"","shape":"flower","color":"#bd9a57"},
-  {"id":"orbit","name":"Órbita Nº 04","category":"decoracion","tag":"OBJETO · ESCULTÓRICO","price":"Desde 12 €","description":"Geometría en movimiento, pensada para ocupar un lugar especial.","model":"","shape":"torus","color":"#668477"},
-  {"id":"vase","name":"Jarrón estriado","category":"decoracion","tag":"DECORACIÓN · HOGAR","price":"Desde 16 €","description":"Volumen y ritmo en una silueta contemporánea.","model":"","shape":"vase","color":"#a96b55"},
-  {"id":"stand","name":"Soporte modular","category":"funcional","tag":"FUNCIONAL · ESCRITORIO","price":"Desde 8 €","description":"Una solución sencilla, diseñada para encajar en tu espacio.","model":"","shape":"stand","color":"#8d8767"},
-  {"id":"totem","name":"Tótem miniatura","category":"figuras","tag":"FIGURA · COLECCIÓN","price":"Desde 11 €","description":"Una pequeña presencia escultórica con carácter propio.","model":"","shape":"totem","color":"#9a765e"}
+  {
+    "id": "dragon",
+    "name": "Dragón articulado",
+    "category": "figuras",
+    "tag": "FIGURA · ARTICULADA",
+    "price": "Desde 14 €",
+    "description": "Una criatura fantástica, articulada y llena de pequeños detalles.",
+    "model": "",
+    "shape": "dragon",
+    "color": "#b66d45",
+    "featured": true
+  },
+  {
+    "id": "bloom",
+    "name": "Flor eterna",
+    "category": "decoracion",
+    "tag": "DECORACIÓN · ORGÁNICA",
+    "price": "Desde 9 €",
+    "description": "Una forma botánica convertida en objeto para conservar.",
+    "model": "",
+    "shape": "flower",
+    "color": "#bd9a57"
+  },
+  {
+    "id": "orbit",
+    "name": "Órbita Nº 04",
+    "category": "decoracion",
+    "tag": "OBJETO · ESCULTÓRICO",
+    "price": "Desde 12 €",
+    "description": "Geometría en movimiento, pensada para ocupar un lugar especial.",
+    "model": "",
+    "shape": "torus",
+    "color": "#668477"
+  },
+  {
+    "id": "vase",
+    "name": "Jarrón estriado",
+    "category": "decoracion",
+    "tag": "DECORACIÓN · HOGAR",
+    "price": "Desde 16 €",
+    "description": "Volumen y ritmo en una silueta contemporánea.",
+    "model": "",
+    "shape": "vase",
+    "color": "#a96b55"
+  },
+  {
+    "id": "stand",
+    "name": "Soporte modular",
+    "category": "funcional",
+    "tag": "FUNCIONAL · ESCRITORIO",
+    "price": "Desde 8 €",
+    "description": "Una solución sencilla, diseñada para encajar en tu espacio.",
+    "model": "",
+    "shape": "stand",
+    "color": "#8d8767"
+  },
+  {
+    "id": "totem",
+    "name": "Tótem miniatura",
+    "category": "figuras",
+    "tag": "FIGURA · COLECCIÓN",
+    "price": "Desde 11 €",
+    "description": "Una pequeña presencia escultórica con carácter propio.",
+    "model": "",
+    "shape": "totem",
+    "color": "#9a765e"
+  },
+  {
+    "id": "MascaraSamurai",
+    "name": "Mascara de Samurai",
+    "category": "figuras",
+    "tag": "FIGURA · COLECCIÓN",
+    "price": "",
+    "description": "Una pequeña presencia escultórica con carácter propio.",
+    "model": "models/1_Mascara_Samurai-simplified.stl",
+    "shape": "MascaraSamurai",
+    "color": "#9a765e"
+  }
 ]
