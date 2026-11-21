@@ -75,6 +75,7 @@
     "description": "Una pequeña presencia escultórica con carácter propio.",
     "model": "models/1_Mascara_Samurai-simplified.stl",
     "shape": "MascaraSamurai",
-    "color": "#9a765e"
+    "color": "#9a765e",
+    "rotationDegrees": [-90, 0, 0]
   }
 ]

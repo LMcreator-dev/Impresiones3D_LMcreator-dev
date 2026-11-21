@@ -85,12 +85,17 @@ function loadProduct(p) {
   if(p.model) {
     const ext=p.model.split('.').pop().toLowerCase(); const loader=ext==='3mf'?new ThreeMFLoader():new STLLoader();
     loader.load(`${import.meta.env.BASE_URL}${p.model.replace(/^\//, '')}`, result=>{
-      if(ext==='stl'){const mesh=new THREE.Mesh(result,new THREE.MeshStandardMaterial({color:p.color,metalness:.12,roughness:.42})); currentModel=mesh;} else currentModel=result;
+      if(ext==='stl'){
+        const mesh=new THREE.Mesh(result,new THREE.MeshStandardMaterial({color:p.color,metalness:.12,roughness:.42}));
+        const rotation=(p.rotationDegrees || [-90,0,0]).map(angle=>THREE.MathUtils.degToRad(angle));
+        mesh.rotation.set(...rotation);
+        currentModel=mesh;
+      } else currentModel=result;
       fitModel(currentModel);
     },undefined,()=>{currentModel=proceduralModel(p);fitModel(currentModel);});
   } else { currentModel=proceduralModel(p); fitModel(currentModel); }
 }
-function fitModel(model){ scene.add(model); const box=new THREE.Box3().setFromObject(model); const center=box.getCenter(new THREE.Vector3()); model.position.sub(center); const size=box.getSize(new THREE.Vector3()); const max=Math.max(size.x,size.y,size.z); const scale=2.6/(max||1); model.scale.setScalar(scale); model.position.y=-.15; controls.target.set(0,0,0); camera.position.set(4,3,5); controls.update(); }
+function fitModel(model){ scene.add(model); const box=new THREE.Box3().setFromObject(model); const center=box.getCenter(new THREE.Vector3()); const size=box.getSize(new THREE.Vector3()); const max=Math.max(size.x,size.y,size.z); const scale=2.6/(max||1); model.scale.setScalar(scale); model.position.sub(center).multiplyScalar(scale); model.position.y-=.15; controls.target.set(0,0,0); camera.position.set(4,3,5); controls.update(); }
 function selectProduct(id){ const p=products.find(x=>x.id===id); if(!p)return; loadProduct(p); document.querySelector('#visor').scrollIntoView({behavior:'smooth'}); }
 document.querySelector('#reset-view').addEventListener('click',()=>{ if(!controls)return; camera.position.set(4,3,5); controls.target.set(0,0,0); controls.update(); });
 initViewer();
