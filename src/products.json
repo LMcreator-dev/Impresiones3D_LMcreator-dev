@@ -16,7 +16,7 @@
   {
     "id": "GTA6",
     "name": "GTA 6",
-    "category": "figuras",
+    "category": "decoracion",
     "tag": "DECORACIÓN · COLECCIÓN",
     "price": "",
     "description": "Un obsequio para los fanáticos de la saga Grand Theft Auto, con un diseño que captura la esencia del juego.",
@@ -30,13 +30,27 @@
   {
     "id": "MarioBros_Bala",
     "name": "MarioBros Bala",
-    "category": "figuras",
+    "category": "decoracion",
     "tag": "DECORACIÓN · COLECCIÓN",
     "price": "",
     "description": "Una figura que representa la icónica bala de Mario Bros, perfecta para los fanáticos del videojuego.",
     "model": "models/3_MarioBros_Bala-simplified.stl",
     "thumbnail": "images/mariobros_bala.png",
     "shape": "MarioBros_Bala",
+    "color": "#9a765e",
+    "rotationDegrees": [0, 0, 0]
+  }
+  ,
+  {
+    "id": "FantasmaCapa",
+    "name": "Fantasma Capa",
+    "category": "figuras",
+    "tag": "FIGURA · COLECCIÓN",
+    "price": "",
+    "description": "Una figura que representa un fantasma con capa, ideal para los amantes de lo paranormal y lo misterioso.",
+    "model": "models/4_Fantasma_Capa-simplified.stl",
+    "thumbnail": "images/fantasma_capa.png",
+    "shape": "FantasmaCapa",
     "color": "#9a765e",
     "rotationDegrees": [0, 0, 0]
   }
