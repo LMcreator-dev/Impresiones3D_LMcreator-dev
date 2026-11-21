@@ -52,6 +52,6 @@
     "thumbnail": "images/fantasma_capa.png",
     "shape": "FantasmaCapa",
     "color": "#9a765e",
-    "rotationDegrees": [0, 0, 0]
+    "rotationDegrees": [-90, 0, 0]
   }
 ]
