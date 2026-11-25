@@ -58,6 +58,93 @@ document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click'
 }));
 renderProducts();
 
+const commissionedCarousel = document.querySelector('#commissioned-carousel');
+const commissionedDialog = document.querySelector('#commissioned-dialog');
+let carouselPointerId = null;
+let carouselStartX = 0;
+let carouselStartScroll = 0;
+let carouselDragged = false;
+const commissionedFiles = import.meta.glob('./bajo-encargo/*.{png,jpg,jpeg,webp,avif}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+const commissionedImages = Object.entries(commissionedFiles)
+  .sort(([a], [b]) => a.localeCompare(b, 'es', { numeric: true, sensitivity: 'base' }))
+  .map(([path, src]) => ({
+    src,
+    name: decodeURIComponent(path.split('/').pop().replace(/\.[^.]+$/, ''))
+      .replace(/^\d+[\s._-]*/, '')
+      .replace(/[_-]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim(),
+  }));
+
+if (commissionedImages.length) {
+  commissionedCarousel.innerHTML = commissionedImages.map(({ src, name }, index) => `
+    <button class="commissioned-card" type="button" data-commissioned-index="${index}" aria-label="Ampliar ${name}">
+      <img src="${src}" alt="${name}" loading="lazy" draggable="false">
+    </button>`).join('');
+} else {
+  commissionedCarousel.innerHTML = '<p class="commissioned-empty">Añade tus fotos a la carpeta <code>src/bajo-encargo</code> para mostrarlas aquí.</p>';
+}
+
+function openCommissionedImage(index) {
+  const image = commissionedImages[index];
+  if (!image) return;
+  document.querySelector('#commissioned-dialog-image').src = image.src;
+  document.querySelector('#commissioned-dialog-image').alt = image.name;
+  document.querySelector('#commissioned-dialog-title').textContent = image.name;
+  document.querySelector('#commissioned-dialog-order').href = makeWhatsApp(
+    `Hola, he visto la imagen «${image.name}» en la sección Bajo encargo y me gustaría pedir presupuesto.`,
+  );
+  commissionedDialog.showModal();
+}
+
+commissionedCarousel.addEventListener('click', event => {
+  if (carouselDragged) {
+    carouselDragged = false;
+    event.preventDefault();
+    return;
+  }
+  const card = event.target.closest('[data-commissioned-index]');
+  if (card) openCommissionedImage(Number(card.dataset.commissionedIndex));
+});
+commissionedCarousel.addEventListener('pointerdown', event => {
+  if (event.button !== 0) return;
+  carouselPointerId = event.pointerId;
+  carouselStartX = event.clientX;
+  carouselStartScroll = commissionedCarousel.scrollLeft;
+  carouselDragged = false;
+});
+commissionedCarousel.addEventListener('pointermove', event => {
+  if (event.pointerId !== carouselPointerId) return;
+  const distance = event.clientX - carouselStartX;
+  if (Math.abs(distance) > 5) {
+    carouselDragged = true;
+    commissionedCarousel.classList.add('is-dragging');
+    commissionedCarousel.scrollLeft = carouselStartScroll - distance;
+  }
+});
+function finishCarouselDrag(event) {
+  if (event.pointerId !== carouselPointerId) return;
+  carouselPointerId = null;
+  commissionedCarousel.classList.remove('is-dragging');
+  if (carouselDragged) window.setTimeout(() => { carouselDragged = false; }, 500);
+}
+commissionedCarousel.addEventListener('pointerup', finishCarouselDrag);
+commissionedCarousel.addEventListener('pointercancel', finishCarouselDrag);
+document.querySelector('.dialog-close').addEventListener('click', () => commissionedDialog.close());
+commissionedDialog.addEventListener('click', event => {
+  if (event.target === commissionedDialog) commissionedDialog.close();
+});
+document.querySelector('.carousel-prev').addEventListener('click', () => {
+  commissionedCarousel.scrollBy({ left: -commissionedCarousel.clientWidth * 0.8, behavior: 'smooth' });
+});
+document.querySelector('.carousel-next').addEventListener('click', () => {
+  commissionedCarousel.scrollBy({ left: commissionedCarousel.clientWidth * 0.8, behavior: 'smooth' });
+});
+
 function initViewer() {
   scene = new THREE.Scene(); scene.background = new THREE.Color('#211e19');
   camera = new THREE.PerspectiveCamera(35, viewerEl.clientWidth / viewerEl.clientHeight, 0.1, 1000); camera.position.set(5,4,7);
