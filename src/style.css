@@ -15,7 +15,7 @@
 .commissioned-card:hover img{transform:scale(1.04)}
 .commissioned-carousel,.commissioned-card,.carousel-arrow{-webkit-tap-highlight-color:transparent}
 .commissioned-carousel:focus,.commissioned-card:focus,.carousel-arrow:focus{outline:none}
-.commissioned-carousel:focus-visible,.commissioned-card:focus-visible,.carousel-arrow:focus-visible{outline:2px solid #a5854d;outline-offset:3px}
+.carousel-arrow:focus-visible{outline:2px solid #a5854d;outline-offset:3px}
 .carousel-arrow{position:absolute;z-index:1;top:calc(50% - 24px);width:38px;height:38px;padding:0;border:0;background:transparent;color:var(--gold);font:38px/1 'Cormorant Garamond',serif;cursor:pointer}
 .carousel-prev{left:0}.carousel-next{right:0}.carousel-arrow:hover{color:var(--gold2)}
 .commissioned-empty{width:100%;margin:0;padding:22px;border:1px dashed #b9a989;color:#71634e;font-size:12px;line-height:1.8}
@@ -23,6 +23,9 @@
 .commissioned-dialog{position:fixed;width:min(92vw,1050px);max-width:none;max-height:90vh;padding:18px;border:1px solid var(--gold);background:#201d18;color:var(--paper);box-shadow:0 24px 90px #0009}
 .commissioned-dialog::backdrop{background:#080706d9;backdrop-filter:blur(4px)}
 .dialog-close{position:absolute;z-index:2;top:24px;right:24px;width:38px;height:38px;border:1px solid #d3b77f;border-radius:50%;background:#171512d9;color:#f3ead9;font-size:27px;line-height:1;cursor:pointer}
+.dialog-close{-webkit-tap-highlight-color:transparent}
+.dialog-close:focus{outline:none}
+.dialog-close:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .dialog-image{display:block;width:100%;max-height:calc(90vh - 125px);object-fit:contain;background:#171512}
 .dialog-caption{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 4px 2px}
 .dialog-caption h3{font:500 30px 'Cormorant Garamond',serif;margin:0}
