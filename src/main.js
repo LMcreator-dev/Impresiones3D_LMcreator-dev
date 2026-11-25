@@ -131,6 +131,7 @@ commissionedCarousel.addEventListener('pointermove', event => {
   const distance = event.clientX - carouselStartX;
   if (Math.abs(distance) > 5) {
     carouselDragged = true;
+    if (event.pointerType === 'touch') return;
     commissionedCarousel.classList.add('is-dragging');
     commissionedCarousel.scrollLeft = carouselStartScroll - distance;
   }
@@ -143,6 +144,7 @@ function finishCarouselDrag(event) {
 }
 commissionedCarousel.addEventListener('pointerup', finishCarouselDrag);
 commissionedCarousel.addEventListener('pointercancel', finishCarouselDrag);
+commissionedCarousel.addEventListener('contextmenu', event => event.preventDefault());
 document.querySelector('.dialog-close').addEventListener('click', () => commissionedDialog.close());
 commissionedDialog.addEventListener('click', event => {
   if (event.target === commissionedDialog) commissionedDialog.close();

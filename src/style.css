@@ -7,10 +7,10 @@
 .commissioned-section{background:var(--paper2);color:var(--ink);padding-top:88px;padding-bottom:100px}
 .commissioned-section .section-heading{margin-bottom:32px}
 .commissioned-carousel-wrap{position:relative;padding:0 48px}
-.commissioned-carousel{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:none;scrollbar-width:thin;scrollbar-color:#a5854d transparent;padding:4px 2px 18px;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.commissioned-carousel{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:none;scrollbar-width:thin;scrollbar-color:#a5854d transparent;padding:4px 2px 18px;cursor:grab;touch-action:pan-x pan-y;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .commissioned-carousel.is-dragging{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
 .commissioned-carousel.is-dragging .commissioned-card{pointer-events:none;cursor:grabbing}
-.commissioned-card{flex:0 0 auto;width:clamp(140px,calc(260px * var(--image-ratio, 1)),340px);height:260px;padding:0;border:0;background:transparent;cursor:grab;overflow:hidden}
+.commissioned-card{flex:0 0 auto;width:clamp(140px,calc(260px * var(--image-ratio, 1)),340px);height:260px;padding:0;border:0;background:transparent;cursor:grab;overflow:hidden;-webkit-touch-callout:none;-webkit-user-drag:none}
 .commissioned-card img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none;-webkit-user-select:none;transition:transform .35s}
 .commissioned-card:hover img{transform:scale(1.04)}
 .carousel-arrow{position:absolute;z-index:1;top:calc(50% - 24px);width:38px;height:38px;border:1px solid #ad956d;border-radius:50%;background:var(--paper);color:#6f5836;font-size:20px;cursor:pointer}
