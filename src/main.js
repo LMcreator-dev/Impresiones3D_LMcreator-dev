@@ -64,6 +64,11 @@ let carouselPointerId = null;
 let carouselStartX = 0;
 let carouselStartScroll = 0;
 let carouselDragged = false;
+let carouselPointerType = 'mouse';
+let carouselLastX = 0;
+let carouselLastTime = 0;
+let carouselVelocity = 0;
+let carouselInertiaFrame = 0;
 const commissionedFiles = import.meta.glob('./bajo-encargo/*.{png,jpg,jpeg,webp,avif}', {
   eager: true,
   query: '?url',
@@ -121,10 +126,17 @@ commissionedCarousel.addEventListener('click', event => {
 });
 commissionedCarousel.addEventListener('pointerdown', event => {
   if (event.button !== 0) return;
+  if (carouselInertiaFrame) cancelAnimationFrame(carouselInertiaFrame);
+  carouselInertiaFrame = 0;
+  carouselPointerType = event.pointerType;
   carouselPointerId = event.pointerId;
   carouselStartX = event.clientX;
   carouselStartScroll = commissionedCarousel.scrollLeft;
+  carouselLastX = event.clientX;
+  carouselLastTime = event.timeStamp;
+  carouselVelocity = 0;
   carouselDragged = false;
+  if (event.pointerType === 'mouse') commissionedCarousel.setPointerCapture(event.pointerId);
 });
 commissionedCarousel.addEventListener('pointermove', event => {
   if (event.pointerId !== carouselPointerId) return;
@@ -135,11 +147,31 @@ commissionedCarousel.addEventListener('pointermove', event => {
     commissionedCarousel.classList.add('is-dragging');
     commissionedCarousel.scrollLeft = carouselStartScroll - distance;
   }
+  const elapsed = event.timeStamp - carouselLastTime;
+  if (elapsed > 0 && elapsed < 100) {
+    const instantVelocity = -(event.clientX - carouselLastX) / elapsed;
+    carouselVelocity = carouselVelocity * 0.35 + instantVelocity * 0.65;
+  }
+  carouselLastX = event.clientX;
+  carouselLastTime = event.timeStamp;
 });
 function finishCarouselDrag(event) {
   if (event.pointerId !== carouselPointerId) return;
   carouselPointerId = null;
   commissionedCarousel.classList.remove('is-dragging');
+  if (event.type === 'pointerup' && carouselPointerType === 'mouse' && carouselDragged) {
+    let previousTime = 0;
+    const glide = time => {
+      if (!previousTime) previousTime = time;
+      const elapsed = Math.min(time - previousTime, 32);
+      previousTime = time;
+      commissionedCarousel.scrollLeft += carouselVelocity * elapsed;
+      carouselVelocity *= Math.pow(0.92, elapsed / 16);
+      if (Math.abs(carouselVelocity) > 0.015) carouselInertiaFrame = requestAnimationFrame(glide);
+      else carouselInertiaFrame = 0;
+    };
+    carouselInertiaFrame = requestAnimationFrame(glide);
+  }
   if (carouselDragged) window.setTimeout(() => { carouselDragged = false; }, 500);
 }
 commissionedCarousel.addEventListener('pointerup', finishCarouselDrag);
