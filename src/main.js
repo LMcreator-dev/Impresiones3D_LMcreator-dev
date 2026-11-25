@@ -85,6 +85,15 @@ if (commissionedImages.length) {
     <button class="commissioned-card" type="button" data-commissioned-index="${index}" aria-label="Ampliar ${name}">
       <img src="${src}" alt="${name}" loading="lazy" draggable="false">
     </button>`).join('');
+  commissionedCarousel.querySelectorAll('.commissioned-card img').forEach(image => {
+    const setCardRatio = () => {
+      if (image.naturalWidth && image.naturalHeight) {
+        image.closest('.commissioned-card').style.setProperty('--image-ratio', image.naturalWidth / image.naturalHeight);
+      }
+    };
+    image.addEventListener('load', setCardRatio);
+    setCardRatio();
+  });
 } else {
   commissionedCarousel.innerHTML = '<p class="commissioned-empty">Añade tus fotos a la carpeta <code>src/bajo-encargo</code> para mostrarlas aquí.</p>';
 }
