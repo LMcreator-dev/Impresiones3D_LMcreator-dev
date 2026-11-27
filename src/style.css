@@ -110,3 +110,24 @@
   .viewer-meta,.viewer-controls{font-size:6px;letter-spacing:.08em}
   .viewer-order{font-size:8px}
 }
+.mahito-section{background:#eee8dc;color:#171512}
+.mahito-configurator{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(230px,.55fr);gap:clamp(28px,6vw,78px);align-items:center;padding:clamp(20px,4vw,48px);background:#e5dccb;border:1px solid rgba(139,112,69,.2)}
+.mahito-preview{display:grid;place-items:center;min-height:320px;padding:18px;background:radial-gradient(ellipse at center,#f8f5ee,#d8cfbf)}
+.mahito-preview canvas{display:block;width:min(100%,760px);height:auto;max-height:620px;object-fit:contain;box-shadow:0 24px 48px #29231830}
+.mahito-options{display:grid;gap:30px;align-content:center}
+.color-option{padding-bottom:22px;border-bottom:1px solid #c9beaa}
+.color-option label{display:block;margin-bottom:15px;font:500 26px 'Cormorant Garamond',serif;color:#28231c}
+.filament-carousel{display:grid;grid-template-columns:34px minmax(0,1fr) 34px;align-items:center;gap:8px}
+.filament-arrow{width:34px;height:42px;padding:0;border:1px solid #c9beaa;background:#f8f4eb;color:#6f5836;font:30px/1 'Cormorant Garamond',serif;cursor:pointer;transition:background .2s,color .2s}
+.filament-arrow:hover{background:#a5854d;color:#fff}
+.filament-arrow:focus-visible,.filament-current:focus-visible{outline:2px solid #a5854d;outline-offset:3px}
+.filament-current{display:flex;min-width:0;align-items:center;gap:12px;padding:7px 10px;border:1px solid #c9beaa;background:#f8f4eb;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.filament-current:active{cursor:grabbing}
+.filament-swatch{flex:0 0 28px;width:28px;height:28px;border:1px solid #0002;border-radius:50%;box-shadow:inset 0 0 0 3px #ffffff70}
+.filament-current-text{display:grid;min-width:0;gap:3px}
+.filament-name{overflow:hidden;color:#342b20;font-size:11px;text-overflow:ellipsis;white-space:nowrap}
+.filament-index{color:#8d806d;font-size:8px;letter-spacing:.12em}
+.color-option p{margin:12px 0 0;color:#777064;font-size:11px;line-height:1.7}
+.mahito-rgb-note{color:#8d806d;font-size:9px;letter-spacing:.13em;line-height:1.7;text-transform:uppercase}
+@media(max-width:700px){.mahito-section{padding:72px 6vw}.mahito-configurator{grid-template-columns:1fr;gap:28px;padding:16px}.mahito-preview{min-height:0;padding:8px}.mahito-preview canvas{max-height:none}.mahito-options{grid-template-columns:1fr 1fr;gap:18px}.color-option{padding-bottom:14px}.color-option label{font-size:22px}.mahito-rgb-note{grid-column:1/-1}}
+@media(max-width:420px){.mahito-options{grid-template-columns:1fr}.mahito-rgb-note{grid-column:auto}}

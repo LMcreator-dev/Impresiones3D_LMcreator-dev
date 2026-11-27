@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 import { ThreeMFLoader } from 'three/addons/loaders/3MFLoader.js';
 import products from './products.json';
+import filamentColors from './filament-colors.json';
 import './style.css';
 
 const grid = document.querySelector('#product-grid');
@@ -187,6 +188,123 @@ document.querySelector('.carousel-prev').addEventListener('click', () => {
 document.querySelector('.carousel-next').addEventListener('click', () => {
   commissionedCarousel.scrollBy({ left: commissionedCarousel.clientWidth * 0.8, behavior: 'smooth' });
 });
+
+const mahitoCanvas = document.querySelector('#mahito-canvas');
+const mahitoContext = mahitoCanvas.getContext('2d', { willReadFrequently: true });
+const mahitoImage = new Image();
+mahitoImage.src = `${import.meta.env.BASE_URL}images/18_Mahito_cuadro.png`;
+const filamentSelections = {
+  frame: filamentColors.findIndex(color => color.name === 'Ash'),
+  art: filamentColors.findIndex(color => color.name === 'Lavender'),
+};
+let mahitoBasePixels;
+let mahitoColorMask;
+function showFilament(region, index) {
+  const colors = filamentColors;
+  filamentSelections[region] = (index + colors.length) % colors.length;
+  const color = colors[filamentSelections[region]];
+  const carousel = document.querySelector(`[data-filament="${region}"]`);
+  carousel.querySelector('.filament-swatch').style.backgroundColor = color.hex;
+  carousel.querySelector('.filament-name').textContent = color.name;
+  carousel.querySelector('.filament-index').textContent = `${filamentSelections[region] + 1} / ${colors.length}`;
+  updateMahitoPreview();
+}
+document.querySelectorAll('.filament-carousel').forEach(carousel => {
+  const region = carousel.dataset.filament;
+  const current = carousel.querySelector('.filament-current');
+  carousel.querySelectorAll('[data-direction]').forEach(button => button.addEventListener('click', () => {
+    showFilament(region, filamentSelections[region] + Number(button.dataset.direction));
+  }));
+  current.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      showFilament(region, filamentSelections[region] + (event.key === 'ArrowRight' ? 1 : -1));
+    }
+  });
+  let startX = null;
+  let activePointerId = null;
+  current.addEventListener('pointerdown', event => {
+    startX = event.clientX;
+    activePointerId = event.pointerId;
+    current.setPointerCapture(event.pointerId);
+  });
+  current.addEventListener('pointerup', event => {
+    if (event.pointerId !== activePointerId || startX === null) return;
+    const distance = event.clientX - startX;
+    if (Math.abs(distance) > 28) showFilament(region, filamentSelections[region] + (distance < 0 ? 1 : -1));
+    startX = null;
+    activePointerId = null;
+  });
+  current.addEventListener('pointercancel', () => { startX = null; activePointerId = null; });
+  showFilament(region, filamentSelections[region]);
+});
+function hexRgb(hex) {
+  return [1, 3, 5].map(offset => parseInt(hex.slice(offset, offset + 2), 16));
+}
+function pointInPolygon(px, py, points) {
+  let inside = false;
+  for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+    const [xi, yi] = points[i];
+    const [xj, yj] = points[j];
+    const crosses = (yi > py) !== (yj > py)
+      && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi;
+    if (crosses) inside = !inside;
+  }
+  return inside;
+}
+function prepareMahitoPreview() {
+  const width = mahitoImage.naturalWidth;
+  const height = mahitoImage.naturalHeight;
+  if (!width || !height) return;
+  mahitoCanvas.width = width;
+  mahitoCanvas.height = height;
+  mahitoContext.drawImage(mahitoImage, 0, 0);
+  mahitoBasePixels = mahitoContext.getImageData(0, 0, width, height).data;
+  mahitoColorMask = new Uint8Array(width * height);
+  const scaleX = width / 1200;
+  const scaleY = height / 896;
+  const scalePolygon = points => points.map(([px, py]) => [px * scaleX, py * scaleY]);
+  const frameOuter = scalePolygon([
+    [260, 78], [260, 75], [262, 73], [266, 72], [943, 72], [947, 73], [949, 75], [950, 79],
+    [950, 757], [949, 761], [947, 764], [943, 765], [267, 765], [263, 764], [261, 761],
+  ]);
+  const frameInner = scalePolygon([
+    [284, 108], [284, 105], [286, 103], [290, 102], [913, 102], [917, 103], [920, 105], [923, 109],
+    [923, 732], [922, 736], [919, 739], [915, 739], [292, 739], [288, 738], [285, 735], [284, 731],
+  ]);
+  for (let py = 0; py < height; py++) {
+    for (let px = 0; px < width; px++) {
+      const insideOuterFrame = pointInPolygon(px, py, frameOuter);
+      const isArt = pointInPolygon(px, py, frameInner);
+      const isFrame = insideOuterFrame && !isArt;
+      if (isFrame) mahitoColorMask[py * width + px] = 1;
+      else if (isArt) mahitoColorMask[py * width + px] = 2;
+    }
+  }
+  updateMahitoPreview();
+}
+function updateMahitoPreview() {
+  if (!mahitoBasePixels || !mahitoColorMask) return;
+  const frame = hexRgb(filamentColors[filamentSelections.frame].hex);
+  const art = hexRgb(filamentColors[filamentSelections.art].hex);
+  const data = new Uint8ClampedArray(mahitoBasePixels);
+  for (let index = 0; index < mahitoColorMask.length; index++) {
+    const region = mahitoColorMask[index];
+    if (!region) continue;
+    const offset = index * 4;
+    if (region === 1) {
+      const luminance = (mahitoBasePixels[offset] * 0.2126 + mahitoBasePixels[offset + 1] * 0.7152 + mahitoBasePixels[offset + 2] * 0.0722) / 255;
+      const shade = 0.4 + luminance * 0.6;
+      for (let channel = 0; channel < 3; channel++) data[offset + channel] = Math.round(frame[channel] * shade);
+    } else {
+      for (let channel = 0; channel < 3; channel++) {
+        data[offset + channel] = Math.round(mahitoBasePixels[offset + channel] * 0.52 + art[channel] * 0.48);
+      }
+    }
+  }
+  mahitoContext.putImageData(new ImageData(data, mahitoCanvas.width, mahitoCanvas.height), 0, 0);
+}
+mahitoImage.addEventListener('load', prepareMahitoPreview);
 
 function initViewer() {
   scene = new THREE.Scene(); scene.background = new THREE.Color('#211e19');
