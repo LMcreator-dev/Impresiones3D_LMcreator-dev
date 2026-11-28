@@ -280,6 +280,7 @@ const viewerEl = document.querySelector('#three-viewer');
 const viewerHint = document.querySelector('#viewer-hint');
 let activeProduct = products[0];
 let scene, camera, renderer, controls, currentModel;
+let modelLoadId = 0;
 function updateViewerHint() {
   viewerHint.textContent = window.matchMedia('(pointer: coarse)').matches ? 'Arrastra para girar · Pellizca para acercar' : 'Arrastra para girar · Desplaza para acercar';
 }
@@ -315,15 +316,41 @@ function proceduralModel(product) {
     group.add(mesh);
   }
   return group;
-}function loadProduct(p) {
+}
+function disposeModel(model) {
+  model.traverse(object => {
+    object.geometry?.dispose();
+    const materials = Array.isArray(object.material) ? object.material : [object.material];
+    materials.forEach(material => {
+      if (!material) return;
+      Object.values(material).forEach(value => {
+        if (value?.isTexture) value.dispose();
+      });
+      material.dispose();
+    });
+  });
+}
+function clearCurrentModel() {
+  if (!currentModel) return;
+  scene.remove(currentModel);
+  disposeModel(currentModel);
+  currentModel = null;
+}
+function loadProduct(p) {
   if(!scene) return;
+  const requestId = ++modelLoadId;
   activeProduct=p; document.querySelector('#viewer-name').textContent=p.name;
   document.querySelector('#viewer-index').textContent = `${String(products.indexOf(p) + 1).padStart(2, '0')} / ${String(products.length).padStart(2, '0')}`;
   document.querySelector('#viewer-order').href = makeWhatsApp(`Hola, he visto ${p.name} y me gustaría consultar este trabajo.`);
-  if(currentModel){scene.remove(currentModel); currentModel.traverse(o=>{if(o.geometry)o.geometry.dispose();});}
+  clearCurrentModel();
   if(p.model) {
     const ext=p.model.split('.').pop().toLowerCase(); const loader=ext==='3mf'?new ThreeMFLoader():new STLLoader();
     loader.load(`${import.meta.env.BASE_URL}${p.model.replace(/^\//, '')}`, result=>{
+      if (requestId !== modelLoadId) {
+        if (ext === 'stl') result.dispose();
+        else disposeModel(result);
+        return;
+      }
       if(ext==='stl'){
         const mesh=new THREE.Mesh(result,new THREE.MeshStandardMaterial({color:p.color,metalness:.12,roughness:.42}));
         const rotation=(p.rotationDegrees || [-90,0,0]).map(angle=>THREE.MathUtils.degToRad(angle));
@@ -331,10 +358,14 @@ function proceduralModel(product) {
         currentModel=mesh;
       } else currentModel=result;
       fitModel(currentModel);
-    },undefined,()=>{currentModel=proceduralModel(p);fitModel(currentModel);});
+    },undefined,()=>{
+      if (requestId !== modelLoadId) return;
+      currentModel=proceduralModel(p);
+      fitModel(currentModel);
+    });
   } else { currentModel=proceduralModel(p); fitModel(currentModel); }
 }
-function fitModel(model){ scene.add(model); const box=new THREE.Box3().setFromObject(model); const center=box.getCenter(new THREE.Vector3()); const size=box.getSize(new THREE.Vector3()); const max=Math.max(size.x,size.y,size.z); const scale=2.6/(max||1); model.scale.setScalar(scale); model.position.sub(center).multiplyScalar(scale); model.position.y-=.15; controls.target.set(0,0,0); camera.position.set(4,3,5); controls.update(); }
+function fitModel(model){ scene.add(model); const box=new THREE.Box3().setFromObject(model); const center=box.getCenter(new THREE.Vector3()); const size=box.getSize(new THREE.Vector3()); const max=Math.max(size.x,size.y,size.z); const scale=2.6/(max||1); model.scale.setScalar(scale); model.position.sub(center).multiplyScalar(scale); model.position.y-=.15; controls.target.set(0,0,0); camera.position.set(4,3,5); controls.saveState(); controls.autoRotate=true; controls.update(); }
 function changeViewerProduct(direction) {
   const currentIndex = products.indexOf(activeProduct);
   const nextIndex = (currentIndex + direction + products.length) % products.length;
@@ -342,5 +373,5 @@ function changeViewerProduct(direction) {
 }
 document.querySelector('#model-prev').addEventListener('click', () => changeViewerProduct(-1));
 document.querySelector('#model-next').addEventListener('click', () => changeViewerProduct(1));
-document.querySelector('#reset-view').addEventListener('click',()=>{ if(!controls)return; camera.position.set(4,3,5); controls.target.set(0,0,0); controls.update(); });
+document.querySelector('#reset-view').addEventListener('click',()=>{ if(!controls)return; controls.autoRotate=false; controls.reset(); });
 initViewer();

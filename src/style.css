@@ -118,33 +118,19 @@
 @media(max-width:700px){.mahito-section{padding:72px 6vw}.mahito-configurator{grid-template-columns:1fr;gap:28px;padding:16px}.mahito-preview{min-height:0;padding:8px}.mahito-preview canvas{max-height:none}.mahito-options{grid-template-columns:1fr 1fr;gap:18px}.color-option{padding-bottom:14px}.color-option label{font-size:22px}.mahito-rgb-note{grid-column:1/-1}}
 @media(max-width:420px){.mahito-options{grid-template-columns:1fr}.mahito-rgb-note{grid-column:auto}}
 
-/* Carrusel de ejemplos: tarjetas juntas y flechas con la paleta del sitio. */
+/* Controles de flecha en SVG para conservar la paleta también en móviles. */
 .examples-carousel{gap:3px}
-.carousel-arrow,.model-arrow,.filament-arrow{-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}
-.carousel-arrow{color:var(--gold)!important;background:transparent!important}
-.carousel-arrow:hover,.carousel-arrow:active{color:var(--gold2)!important}
-.model-arrow{color:var(--gold2)!important}
-.filament-arrow{color:#6f5836!important}
-.carousel-arrow:focus-visible,.model-arrow:focus-visible,.filament-arrow:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
-@media(max-width:600px){.examples-carousel{gap:3px}}
-
-/* Neutraliza los estilos azules nativos y evita el zoom por doble toque en botones. */
-button{-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button{-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;color:inherit}
 button:focus{outline:none}
 button:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
-.carousel-arrow,.model-arrow{color:var(--gold2)!important}
-.filament-arrow{color:#6f5836!important}
-button{color:inherit}
-button.carousel-arrow,button.carousel-arrow:hover,button.carousel-arrow:active,button.carousel-arrow:focus,
-button.model-arrow,button.model-arrow:hover,button.model-arrow:active,button.model-arrow:focus{
-  color:var(--gold2)!important;
-  -webkit-text-fill-color:var(--gold2)!important;
-  text-shadow:none!important;
-  -webkit-tap-highlight-color:transparent!important;
-}
-button.filament-arrow,button.filament-arrow:hover,button.filament-arrow:active,button.filament-arrow:focus{
-  color:#6f5836!important;
-  -webkit-text-fill-color:#6f5836!important;
-  text-shadow:none!important;
-  -webkit-tap-highlight-color:transparent!important;
-}
+.carousel-arrow,.model-arrow,.filament-arrow{-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}
+.carousel-arrow,.carousel-arrow:hover,.carousel-arrow:active,.carousel-arrow:focus{color:var(--gold)!important;-webkit-text-fill-color:var(--gold)!important;background:transparent!important}
+.model-arrow,.model-arrow:hover,.model-arrow:active,.model-arrow:focus{color:var(--gold2)!important;-webkit-text-fill-color:var(--gold2)!important}
+.filament-arrow,.filament-arrow:hover,.filament-arrow:active,.filament-arrow:focus{color:#6f5836!important;-webkit-text-fill-color:#6f5836!important}
+.button-arrow-icon{display:block;width:22px;height:22px;pointer-events:none}
+.button-arrow-icon path{fill:none!important;stroke:currentColor!important;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.model-arrow .button-arrow-icon{width:24px;height:24px}
+.filament-arrow .button-arrow-icon{width:17px;height:17px}
+#reset-view{display:grid;place-items:center}
+.reset-icon{width:17px;height:17px}
+@media(max-width:600px){.examples-carousel{gap:3px}}
