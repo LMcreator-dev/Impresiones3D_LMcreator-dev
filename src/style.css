@@ -134,3 +134,17 @@ button:focus{outline:none}
 button:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
 .carousel-arrow,.model-arrow{color:var(--gold2)!important}
 .filament-arrow{color:#6f5836!important}
+button{color:inherit}
+button.carousel-arrow,button.carousel-arrow:hover,button.carousel-arrow:active,button.carousel-arrow:focus,
+button.model-arrow,button.model-arrow:hover,button.model-arrow:active,button.model-arrow:focus{
+  color:var(--gold2)!important;
+  -webkit-text-fill-color:var(--gold2)!important;
+  text-shadow:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+button.filament-arrow,button.filament-arrow:hover,button.filament-arrow:active,button.filament-arrow:focus{
+  color:#6f5836!important;
+  -webkit-text-fill-color:#6f5836!important;
+  text-shadow:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
