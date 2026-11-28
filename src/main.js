@@ -41,20 +41,20 @@ const examples = Object.entries(exampleFiles)
   }));
 if (examples.length) {
   examplesCarousel.innerHTML = examples.map(({ src, name }) => `
-    <figure class="commissioned-card">
+    <figure class="example-card">
       <img src="${src}" alt="${name}" loading="lazy" draggable="false">
     </figure>`).join('');
-  examplesCarousel.querySelectorAll('.commissioned-card img').forEach(image => {
+  examplesCarousel.querySelectorAll('.example-card img').forEach(image => {
     const setCardRatio = () => {
       if (image.naturalWidth && image.naturalHeight) {
-        image.closest('.commissioned-card').style.setProperty('--image-ratio', image.naturalWidth / image.naturalHeight);
+        image.closest('.example-card').style.setProperty('--image-ratio', image.naturalWidth / image.naturalHeight);
       }
     };
     image.addEventListener('load', setCardRatio);
     setCardRatio();
   });
 } else {
-  examplesCarousel.innerHTML = '<p class="commissioned-empty">Añade imágenes a <code>src/ejemplos</code> para mostrarlas aquí.</p>';
+  examplesCarousel.innerHTML = '<p class="examples-empty">Añade imágenes a <code>src/ejemplos</code> para mostrarlas aquí.</p>';
 }
 const examplesDialog = document.querySelector('#examples-dialog');
 const examplesDialogImage = document.querySelector('#examples-dialog-image');
@@ -93,7 +93,7 @@ examplesCarousel.addEventListener('click', event => {
     carouselDragged = false;
     return;
   }
-  const image = event.target.closest('.commissioned-card img');
+  const image = event.target.closest('.example-card img');
   if (!image) return;
   examplesDialogImage.src = image.src;
   examplesDialogImage.alt = image.alt;

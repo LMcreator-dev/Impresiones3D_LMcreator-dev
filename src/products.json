@@ -1,9 +1,44 @@
 [
-  { "name": "Máscara de Samurai", "model": "models/1_Mascara_Samurai-simplified.stl", "color": "#9a765e", "rotationDegrees": [-90, 0, 0] },
-  { "name": "GTA 6", "model": "models/2_GTA_6-simplified.stl", "color": "#9a765e", "rotationDegrees": [-90, 0, 0] },
-  { "name": "Bala de Mario Bros", "model": "models/3_MarioBros_Bala-simplified.stl", "color": "#9a765e", "rotationDegrees": [90, 0, 0] },
-  { "name": "Fantasma con capa", "model": "models/4_Fantasma_capa-simplified.stl", "color": "#9a765e", "rotationDegrees": [0, 0, 0] },
-  { "name": "Trío de máscaras geométricas japonesas", "model": "models/5_Trio_Mascaras_Geometricas_Japonesas-simplified.stl", "color": "#9a765e", "rotationDegrees": [0, 0, 0] },
-  { "name": "Taza de Monster", "model": "models/6_Vaso_Monster-reduced.stl", "color": "#9a765e", "rotationDegrees": [-90, 0, 0] },
-  { "name": "Gengar golpeado", "model": "models/7_gengar_golpeado-compressed.stl", "color": "#9a765e", "rotationDegrees": [-90, 0, 0] }
+  {
+    "name": "Máscara de Samurai",
+    "model": "models/1_Mascara_Samurai-simplified.stl",
+    "color": "#9a765e",
+    "rotationDegrees": [-90, 0, 0]
+  },
+  {
+    "name": "GTA 6",
+    "model": "models/2_GTA_6-simplified.stl",
+    "color": "#9a765e",
+    "rotationDegrees": [-90, 0, 0]
+  },
+  {
+    "name": "Bala de Mario Bros",
+    "model": "models/3_MarioBros_Bala-simplified.stl",
+    "color": "#9a765e",
+    "rotationDegrees": [90, 0, 0]
+  },
+  {
+    "name": "Fantasma con capa",
+    "model": "models/4_Fantasma_capa-simplified.stl",
+    "color": "#9a765e",
+    "rotationDegrees": [0, 0, 0]
+  },
+  {
+    "name": "Trío de máscaras geométricas japonesas",
+    "model": "models/5_Trio_Mascaras_Geometricas_Japonesas-simplified.stl",
+    "color": "#9a765e",
+    "rotationDegrees": [0, 0, 0]
+  },
+  {
+    "name": "Taza de Monster",
+    "model": "models/6_Vaso_Monster-reduced.stl",
+    "color": "#9a765e",
+    "rotationDegrees": [-90, 0, 0]
+  },
+  {
+    "name": "Gengar golpeado",
+    "model": "models/gengar_golpeado-compressed.stl",
+    "color": "#9a765e",
+    "rotationDegrees": [-90, 0, 0]
+  }
 ]
