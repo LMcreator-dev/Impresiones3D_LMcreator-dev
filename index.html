@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#171512" />
-    <meta name="description" content="Figuras, decoración y objetos impresos en 3D. Explora el catálogo interactivo de ATELIER y solicita presupuesto por WhatsApp para una pieza o un encargo personalizado." />
-    <title>Figuras y objetos impresos en 3D | ATELIER 3D</title>
+    <meta name="description" content="Figuras, cuadros y piezas impresas en 3D. Consulta trabajos por WhatsApp." />
+    <title>Figuras, cuadros y piezas impresas en 3D | ATELIER 3D</title>
     <link rel="canonical" href="https://lmcreator-dev.github.io/Impresiones3D_LMcreator-dev/" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content="ATELIER 3D" />
-    <meta property="og:title" content="Figuras y objetos impresos en 3D | ATELIER 3D" />
-    <meta property="og:description" content="Explora figuras, decoración y objetos impresos en 3D. Gira cada pieza y solicita presupuesto por WhatsApp." />
+    <meta property="og:title" content="Figuras, cuadros y piezas impresas en 3D | ATELIER 3D" />
+    <meta property="og:description" content="Explora figuras, cuadros y piezas impresas en 3D. Consulta trabajos por WhatsApp." />
     <meta property="og:url" content="https://lmcreator-dev.github.io/Impresiones3D_LMcreator-dev/" />
     <meta name="twitter:card" content="summary" />
     <script type="application/ld+json">
@@ -21,7 +21,7 @@
         "@type": "WebSite",
         "name": "ATELIER 3D",
         "url": "https://lmcreator-dev.github.io/Impresiones3D_LMcreator-dev/",
-        "description": "Figuras, decoración y objetos impresos en 3D.",
+        "description": "Figuras, cuadros y piezas impresas en 3D.",
         "inLanguage": "es-ES"
       }
     </script>
@@ -33,8 +33,8 @@
     <div id="app">
       <header class="topbar">
         <a class="wordmark" href="#inicio" aria-label="Atelier inicio"><span class="mark">A</span><span>ATELIER<small>OBJETOS EN TRES DIMENSIONES</small></span></a>
-        <nav><a href="#coleccion">Colección</a><a href="#encargos">Encargos</a><a href="#opiniones">Opiniones</a></nav>
-        <a class="top-cta" href="#coleccion">Explorar piezas <span>↗</span></a>
+        <nav><a href="#figuras">Figuras</a><a href="#cuadros">Cuadros</a><a href="#piezas">Piezas</a></nav>
+        <a class="top-cta" href="#figuras">Ver trabajos <span>↗</span></a>
       </header>
 
       <main>
@@ -42,8 +42,8 @@
           <div class="hero-copy">
             <div class="eyebrow"><span></span> DISEÑO · MATERIA · IMPRESIÓN 3D</div>
             <h1>Pequeñas obras.<br><em>Otras dimensiones.</em></h1>
-            <p class="hero-text">Figuras, decoración y objetos impresos en 3D, diseñados para tomar forma capa a capa. Explora el catálogo, gira cada pieza y solicita la tuya por WhatsApp.</p>
-            <a class="text-link" href="#coleccion">Descubrir la colección <span>⟶</span></a>
+            <p class="hero-text">Figuras, cuadros y piezas impresos en 3D, diseñados para tomar forma capa a capa. Explora algunos ejemplos y consulta tu trabajo por WhatsApp.</p>
+            <a class="text-link" href="#figuras">Ver trabajos <span>⟶</span></a>
             <div class="hero-foot"><span>01 / 03</span><i></i><span>HECHO PARA MIRAR DE CERCA</span></div>
           </div>
           <div class="hero-art">
@@ -59,49 +59,54 @@
 
         <section class="intro-strip"><span class="strip-star">✳︎</span><p>No es producción en serie. <em>Es diseño que puedes tocar.</em></p><span class="strip-star">✳︎</span></section>
 
-        <section class="collection section-pad" id="coleccion">
-          <div class="section-heading"><div><div class="eyebrow"><span></span> EL GABINETE DE CURIOSIDADES</div><h2>La colección<span class="gold-dot">.</span></h2></div><p>Una selección de figuras, objetos y piezas funcionales. Cada una, lista para contemplar desde todos sus ángulos.<br><b>Las imagenes son meramente orientativas, las piezas no estan coloreadas, tienen el color del filamente base.</p></div>
-          <div class="filter-row" id="filters"><button class="filter active" data-filter="todos">Todo <sup>00</sup></button><button class="filter" data-filter="figuras">Figuras <sup>00</sup></button><button class="filter" data-filter="decoracion">Decoración <sup>00</sup></button><button class="filter" data-filter="funcional">Funcional <sup>00</sup></button></div>
-          <div class="product-grid" id="product-grid"></div>
+        <section class="mahito-section section-pad showcase-section" id="figuras" aria-labelledby="figuras-title">
+          <div class="section-heading"><div><div class="eyebrow"><span></span> FIGURAS</div><h2 id="figuras-title">Figuras<span class="gold-dot">.</span></h2></div><p>Ejemplo: Gengar golpeado.</p></div>
+          <div class="showcase-configurator"><div class="mahito-preview"><canvas class="showcase-image" id="gengar-canvas" aria-label="Vista previa de Gengar golpeado con el filamento seleccionado"></canvas></div><aside class="mahito-options" aria-label="Personalizar color de la figura"><div class="color-option"><h3>Filamento de la figura</h3><div class="filament-carousel" data-filament="figure" aria-label="Color de filamento de la figura"><button class="filament-arrow" type="button" data-direction="-1" aria-label="Color anterior">‹</button><div class="filament-current" tabindex="0" role="group" aria-live="polite"><span class="filament-swatch" aria-hidden="true"></span><span class="filament-current-text"><span class="filament-name"></span><span class="filament-index"></span></span></div><button class="filament-arrow" type="button" data-direction="1" aria-label="Color siguiente">›</button></div><p>Desliza para cambiar el color del filamento.</p></div><span class="mahito-rgb-note">Vista previa orientativa.</span><a class="viewer-order" data-consult="Gengar golpeado" href="#" target="_blank" rel="noopener">Consultar este trabajo <span>↗</span></a></aside></div>
         </section>
 
-        <section class="commissioned-section section-pad" id="bajo-encargo" aria-labelledby="commissioned-title">
-          <div class="section-heading"><div><div class="eyebrow"><span></span> PIEZAS PERSONALIZADAS</div><h2 id="commissioned-title">Bajo encargo<span class="gold-dot">.</span></h2></div><p>Algunas ideas se disfrutan mejor en imágenes. Elige una para verla con más detalle.</p></div>
-          <div class="commissioned-carousel-wrap">
-            <button class="carousel-arrow carousel-prev" type="button" aria-label="Ver imágenes anteriores">‹</button>
-            <div class="commissioned-carousel" id="commissioned-carousel" aria-label="Imágenes de piezas bajo encargo" tabindex="0"></div>
-            <button class="carousel-arrow carousel-next" type="button" aria-label="Ver imágenes siguientes">›</button>
-          </div>
-        </section>
-
-        <dialog class="commissioned-dialog" id="commissioned-dialog" aria-label="Imagen de pieza bajo encargo">
-          <button class="dialog-close" type="button" aria-label="Cerrar imagen">×</button>
-          <img class="dialog-image" id="commissioned-dialog-image" alt="">
-          <div class="dialog-caption"><h3 id="commissioned-dialog-title"></h3><a class="viewer-order" id="commissioned-dialog-order" href="#" target="_blank" rel="noopener">Pedir presupuesto</a></div>
-        </dialog>
-
-        <section class="mahito-section section-pad" id="18-mahito" aria-labelledby="mahito-title">
-          <div class="section-heading"><div><div class="eyebrow"><span></span> DISEÑO PERSONALIZABLE</div><h2 id="mahito-title">Cuadros<span class="gold-dot">.</span></h2></div><p>Cuadros y fotos personalizables con filamentos de colores distintos.</p></div>
+        <section class="mahito-section section-pad showcase-section" id="cuadros" aria-labelledby="mahito-title">
+          <div class="section-heading"><div><div class="eyebrow"><span></span> CUADROS</div><h2 id="mahito-title">Cuadros<span class="gold-dot">.</span></h2></div><p>Ejemplo: cuadro de Mahito, personalizable con filamentos de distintos colores.</p></div>
           <div class="mahito-configurator">
             <div class="mahito-preview"><canvas id="mahito-canvas" aria-label="Vista previa del cuadro de Mahito con los colores seleccionados"></canvas></div>
             <aside class="mahito-options" aria-label="Personalizar colores del cuadro">
               <div class="color-option"><h3>Filamento del marco</h3><div class="filament-carousel" data-filament="frame" aria-label="Color de filamento para el marco"><button class="filament-arrow" type="button" data-direction="-1" aria-label="Color anterior">‹</button><div class="filament-current" tabindex="0" role="group" aria-live="polite"><span class="filament-swatch" aria-hidden="true"></span><span class="filament-current-text"><span class="filament-name"></span><span class="filament-index"></span></span></div><button class="filament-arrow" type="button" data-direction="1" aria-label="Color siguiente">›</button></div><p>Desliza para cambiar el color del borde.</p></div>
               <div class="color-option"><h3>Filamento de la foto</h3><div class="filament-carousel" data-filament="art" aria-label="Color de filamento para la imagen"><button class="filament-arrow" type="button" data-direction="-1" aria-label="Color anterior">‹</button><div class="filament-current" tabindex="0" role="group" aria-live="polite"><span class="filament-swatch" aria-hidden="true"></span><span class="filament-current-text"><span class="filament-name"></span><span class="filament-index"></span></span></div><button class="filament-arrow" type="button" data-direction="1" aria-label="Color siguiente">›</button></div><p>Desliza para cambiar el tono de la imagen.</p></div>
               <span class="mahito-rgb-note">Colores de la gama PLA de Smart Materials 3D. La vista previa es orientativa.</span>
+              <a class="viewer-order" data-consult="Cuadro de Mahito" href="#" target="_blank" rel="noopener">Consultar este trabajo <span>↗</span></a>
             </aside>
           </div>
         </section>
 
+        <section class="mahito-section section-pad showcase-section" id="piezas" aria-labelledby="piezas-title">
+          <div class="section-heading"><div><div class="eyebrow"><span></span> PIEZAS</div><h2 id="piezas-title">Piezas<span class="gold-dot">.</span></h2></div><p>Ejemplo: taza de Monster.</p></div>
+          <div class="showcase-configurator"><div class="mahito-preview"><canvas class="showcase-image" id="monster-canvas" aria-label="Vista previa de la taza de Monster con el filamento seleccionado"></canvas></div><aside class="mahito-options" aria-label="Personalizar color de la taza"><div class="color-option"><h3>Filamento de la taza</h3><div class="filament-carousel" data-filament="piece" aria-label="Color de filamento de la taza"><button class="filament-arrow" type="button" data-direction="-1" aria-label="Color anterior">‹</button><div class="filament-current" tabindex="0" role="group" aria-live="polite"><span class="filament-swatch" aria-hidden="true"></span><span class="filament-current-text"><span class="filament-name"></span><span class="filament-index"></span></span></div><button class="filament-arrow" type="button" data-direction="1" aria-label="Color siguiente">›</button></div><p>Desliza para cambiar el color del filamento.</p></div><span class="mahito-rgb-note">Vista previa orientativa.</span><a class="viewer-order" data-consult="Taza de Monster" href="#" target="_blank" rel="noopener">Consultar este trabajo <span>↗</span></a></aside></div>
+        </section>
+
+        <section class="commissioned-section section-pad" id="ejemplos" aria-labelledby="examples-title">
+          <div class="section-heading"><div><div class="eyebrow"><span></span> GALERÍA DE TRABAJOS</div><h2 id="examples-title">Ejemplos<span class="gold-dot">.</span></h2></div><p>Otros trabajos realizados. Desliza para explorar la galería.</p></div>
+          <div class="commissioned-carousel-wrap">
+            <button class="carousel-arrow carousel-prev" id="examples-prev" type="button" aria-label="Ver ejemplos anteriores">‹</button>
+            <div class="commissioned-carousel" id="examples-carousel" aria-label="Carrusel de ejemplos de trabajos" tabindex="0"></div>
+            <button class="carousel-arrow carousel-next" id="examples-next" type="button" aria-label="Ver ejemplos siguientes">›</button>
+          </div>
+        </section>
+
+        <dialog class="commissioned-dialog" id="examples-dialog" aria-label="Ampliar imagen del ejemplo">
+          <button class="dialog-close" id="examples-dialog-close" type="button" aria-label="Cerrar imagen">×</button>
+          <img class="dialog-image" id="examples-dialog-image" alt="">
+        </dialog>
+
         <section class="viewer-section" id="visor">
           <div class="viewer-heading"><div class="eyebrow"><span></span> OBSERVA SIN LÍMITES</div><h2>La pieza, <em>en tus manos.</em></h2><p id="viewer-hint">Arrastra para girar · Desplaza para acercar</p></div>
-          <div class="viewer-shell"><div class="viewer-meta"><span id="viewer-name">Forma orgánica Nº 01</span><span>VISOR INTERACTIVO / 3D</span></div><div id="three-viewer" class="three-viewer"><div class="viewer-loading">Preparando la pieza…</div><div class="viewer-crosshair">✳︎</div></div><div class="viewer-controls"><span>360°</span><span>ARRASTRA PARA EXPLORAR</span><button id="reset-view" aria-label="Restablecer vista">↺</button></div></div>
-          <div class="viewer-note">Explora la pieza en 3D y, si te gusta, solicita presupuesto por WhatsApp.</div>
-          <a class="viewer-order" id="viewer-order" href="#" target="_blank" rel="noopener">Solicitar esta pieza por WhatsApp <span>↗</span></a>
+          <div class="viewer-shell"><div class="viewer-meta"><span id="viewer-name">Máscara de Samurai</span><span><span id="viewer-index">01 / 07</span> · VISOR INTERACTIVO / 3D</span></div><div id="three-viewer" class="three-viewer"><div class="viewer-loading">Preparando la pieza…</div><button class="model-arrow model-prev" id="model-prev" type="button" aria-label="Mostrar modelo anterior">‹</button><button class="model-arrow model-next" id="model-next" type="button" aria-label="Mostrar modelo siguiente">›</button><div class="viewer-crosshair">✳︎</div></div><div class="viewer-controls"><span>360°</span><span>ARRASTRA PARA EXPLORAR</span><button id="reset-view" aria-label="Restablecer vista">↺</button></div></div>
+          <div class="viewer-note">Explora la pieza en 3D y consúltanos cualquier detalle por WhatsApp.</div>
+          <a class="viewer-order" id="viewer-order" href="#" target="_blank" rel="noopener">Consultar este trabajo <span>↗</span></a>
         </section>
 
         <section class="custom-section section-pad" id="encargos"><div class="custom-ornament">✳︎</div><div class="custom-content"><div class="eyebrow"><span></span> UNA IDEA, TUYA</div><h2>¿Y si todavía<br><em>no existe?</em></h2><p>Cuéntanos qué tienes en mente. Una figura especial, una pieza que no encuentras o un diseño hecho a tu medida. Lo estudiamos contigo y le damos forma.</p><a class="gold-link" id="custom-whatsapp" href="#">Cuéntanos tu idea <span>↗</span></a></div><div class="custom-side"><span class="side-number">02</span><span class="side-label">DISEÑO A MEDIDA<br>IMPRESIÓN BAJO PEDIDO</span></div></section>
 
         <section class="reviews-section section-pad" id="opiniones"><div class="section-heading"><div><div class="eyebrow"><span></span> PALABRAS QUE DEJAN HUELLA</div><h2>Lo que cuentan<span class="gold-dot">.</span></h2></div><p>Las mejores piezas no terminan al salir de la impresora: empiezan cuando llegan a su nuevo hogar.</p></div><div class="review-layout"><div class="review-quote"><div class="quote-mark">“</div><blockquote>El detalle y el acabado superaron lo que esperaba. Se nota el cuidado detrás de cada pieza.</blockquote><div class="review-author">— CLIENTE DE LA CASA <span>★★★★★</span></div></div><div class="review-invite"><span class="review-seal">✳︎</span><h3>¿Ya tienes<br>una pieza nuestra?</h3><p>Nos encantará conocer tu experiencia. Escríbenos y comparte tu opinión.</p><a id="review-whatsapp" class="text-link" href="#">Compartir opinión <span>⟶</span></a></div></div></section>
+
       </main>
 
       <footer class="footer"><a class="wordmark" href="#inicio"><span class="mark">A</span><span>ATELIER<small>OBJETOS EN TRES DIMENSIONES</small></span></a><p>Diseñado con intención. Impreso capa a capa.</p><span>© 2026 ATELIER 3D</span></footer>

@@ -1,44 +1,37 @@
-# ATELIER 3D — starter para GitHub Pages
+# ATELIER 3D
 
-Web de catálogo de impresión 3D con estética barroca contemporánea, visor Three.js y encargos por WhatsApp.
+Web de impresión 3D con tres apartados principales, vistas previas de color, un carrusel de ejemplos y un visor interactivo de modelos.
 
-## Requisitos
-- Node.js 20.19+ o 22.12+
-- npm
+## Desarrollo local
 
-## Ejecutar en local
+Requisitos: Node.js 20.19+ o 22.12+ y npm.
+
 ```bash
 npm install
 npm run dev
 ```
 
-## Personalización obligatoria antes de publicar
-1. Abre `src/main.js` y cambia `whatsappNumber` por tu número en formato internacional, sin `+`, espacios ni guiones. Ejemplo: `346XXXXXXXX`.
-2. En GitHub: Settings → Pages → Build and deployment → selecciona **GitHub Actions**.
-3. Sube el proyecto a la rama `main`. El workflow compilará y publicará la web automáticamente en [lmcreator-dev.github.io/Impresiones3D_LMcreator-dev](https://lmcreator-dev.github.io/Impresiones3D_LMcreator-dev/).
+Para generar la versión de publicación:
 
-## Añadir productos
-Edita `src/products.json` y añade un objeto con estos campos:
-```json
-{
-  "id": "nombre-unico",
-  "name": "Nombre visible",
-  "category": "figuras",
-  "tag": "FIGURA · COLECCIÓN",
-  "price": "Desde 10 €",
-  "description": "Descripción breve.",
-  "model": "models/mi-figura.stl",
-  "shape": "totem",
-  "color": "#9a765e"
-}
+```bash
+npm run build
 ```
-Categorías: `figuras`, `decoracion`, `funcional`.
-Formatos de visor: `.stl` y `.3mf`. Guarda los archivos dentro de `public/models/` y utiliza rutas relativas como `models/archivo.stl`.
 
-Si `model` está vacío, el visor muestra una forma 3D de demostración generada en el navegador. Las miniaturas actuales son ilustraciones CSS temporales: sustitúyelas por fotografías/renderizados de tus piezas cuando los tengas.
+## Estructura
 
-## Límites de esta primera versión
-- Los encargos se envían por WhatsApp; no hay pagos ni carrito.
-- La sección de opiniones es una invitación a compartir experiencia por WhatsApp. Los comentarios públicos persistentes y moderación requieren backend (por ejemplo Supabase), que no se incluye todavía.
-- Los precios son orientativos de muestra: cámbialos antes de publicar.
-- Los modelos alojados en `public/` son descargables por los visitantes. No subas STL privados si no quieres distribuirlos.
+- `public/images/`: imágenes principales de Gengar, Mahito y la taza de Monster.
+- `public/models/`: modelos STL disponibles en el visor 3D.
+- `src/ejemplos/`: imágenes que se cargan automáticamente en el carrusel.
+- `src/products.json`: orden, nombre, modelo, color y orientación de cada STL del visor.
+- `src/main.js`: carruseles, selectores de filamento y visor 3D.
+- `src/style.css`: estilos del sitio.
+
+## Actualizar contenido
+
+Añade una imagen a `src/ejemplos/` para incorporarla al carrusel. Los archivos compatibles son PNG, JPG, JPEG, WEBP y AVIF.
+
+Para añadir un STL al visor, coloca el archivo en `public/models/` y agrega su nombre, ruta, color y orientación en `src/products.json`. El visor muestra los modelos en el orden de esa lista.
+
+El número de WhatsApp se configura en `src/main.js`, en la constante `whatsappNumber`.
+
+El sitio se publica en GitHub Pages mediante el flujo de trabajo de `.github/workflows/`.

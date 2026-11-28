@@ -6,77 +6,31 @@ import products from './products.json';
 import filamentColors from './filament-colors.json';
 import './style.css';
 
-const grid = document.querySelector('#product-grid');
-const viewerEl = document.querySelector('#three-viewer');
-const viewerHint = document.querySelector('#viewer-hint');
-const whatsappNumber = '34624010211'; // Sustituye por tu número, con prefijo internacional y sin +
-let activeProduct = products[0];
-let scene, camera, renderer, controls, currentModel;
-
-function updateViewerHint() {
-  if (!viewerHint) return;
-  viewerHint.textContent = window.matchMedia('(pointer: coarse)').matches
-    ? 'Arrastra para girar · Pellizca para acercar'
-    : 'Arrastra para girar · Desplaza para acercar';
-}
-updateViewerHint();
-window.addEventListener('resize', updateViewerHint);
-
+const whatsappNumber = '34624010211';
 function makeWhatsApp(message) { return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`; }
-document.querySelector('#custom-whatsapp').href = makeWhatsApp('Hola, me gustaría consultar un encargo personalizado de impresión 3D.');
+document.querySelector('#custom-whatsapp').href = makeWhatsApp('Hola, me gustaría consultar un trabajo personalizado de impresión 3D.');
 document.querySelector('#review-whatsapp').href = makeWhatsApp('Hola, me gustaría compartir mi opinión sobre una pieza que he encargado.');
-
-function productCard(p, index) {
-  const visual = p.thumbnail
-    ? `<img class="product-thumbnail" src="${import.meta.env.BASE_URL}${p.thumbnail}" alt="Vista de ${p.name}">`
-    : `<span class="mini-piece mini-${p.shape}"><i></i></span>`;
-  return `<article class="product-card" style="--piece:${p.color};--delay:${index * 70}ms">
-    <button class="product-visual" data-open="${p.id}" aria-label="Ver ${p.name} en 3D"><span class="visual-index">0${index+1}</span>${visual}<span class="visual-open">Ver en 3D</span></button>
-    <div class="product-info"><div><span class="product-tag">${p.tag}</span><h3>${p.name}</h3></div><span class="product-price">${p.price}</span></div>
-    <p class="product-description">${p.description}</p><button class="product-order" data-order="${p.id}">Solicitar presupuesto</button>
-  </article>`;
-}
-function renderProducts(filter='todos') {
-  document.querySelectorAll('.filter').forEach(button => {
-    const category = button.dataset.filter;
-    const count = category === 'todos'
-      ? products.length
-      : products.filter(p => p.category === category).length;
-    const counter = button.querySelector('sup');
-    if (counter) counter.textContent = String(count).padStart(2, '0');
-  });
-  const items = products.filter(p => filter === 'todos' || p.category === filter);
-  grid.innerHTML = items.map(productCard).join('');
-  grid.querySelectorAll('[data-open]').forEach(el => el.addEventListener('click', () => selectProduct(el.dataset.open)));
-  grid.querySelectorAll('[data-order]').forEach(el => el.addEventListener('click', () => {
-    const p = products.find(x => x.id === el.dataset.order);
-    window.open(makeWhatsApp(`Hola, he visto ${p.name} y me gustaría pedir presupuesto. ¿Me podrías pasar precio?`), '_blank', 'noopener');
-  }));
-}
-document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click', () => {
-  document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active'); renderProducts(btn.dataset.filter);
-}));
-renderProducts();
-
-const commissionedCarousel = document.querySelector('#commissioned-carousel');
-const commissionedDialog = document.querySelector('#commissioned-dialog');
-let carouselPointerId = null;
-let carouselStartX = 0;
-let carouselStartScroll = 0;
-let carouselDragged = false;
-let carouselPointerType = 'mouse';
-let carouselLastX = 0;
-let carouselLastTime = 0;
-let carouselVelocity = 0;
-let carouselInertiaFrame = 0;
-const commissionedFiles = import.meta.glob('./bajo-encargo/*.{png,jpg,jpeg,webp,avif}', {
+document.querySelectorAll('[data-consult]').forEach(link => {
+  link.href = makeWhatsApp(`Hola, me gustaría consultar el trabajo «${link.dataset.consult}».`);
+});
+const mahitoCanvas = document.querySelector('#mahito-canvas');
+const mahitoContext = mahitoCanvas.getContext('2d', { willReadFrequently: true });
+const mahitoImage = new Image();
+mahitoImage.src = `${import.meta.env.BASE_URL}images/18_Mahito_cuadro.png`;
+const showcasePreviews = {
+  figure: { canvas: document.querySelector('#gengar-canvas'), image: new Image(), pixels: null, coverage: null },
+  piece: { canvas: document.querySelector('#monster-canvas'), image: new Image(), pixels: null, coverage: null },
+};
+showcasePreviews.figure.image.src = `${import.meta.env.BASE_URL}images/8_Gengar_golpeado.png`;
+showcasePreviews.piece.image.src = `${import.meta.env.BASE_URL}images/6_Vaso_Monster-reduced_1.png`;
+const exampleFiles = import.meta.glob('./ejemplos/*.{png,jpg,jpeg,webp,avif}', {
   eager: true,
   query: '?url',
   import: 'default',
 });
-const commissionedImages = Object.entries(commissionedFiles)
-  .sort(([a], [b]) => a.localeCompare(b, 'es', { numeric: true, sensitivity: 'base' }))
+const examplesCarousel = document.querySelector('#examples-carousel');
+const examples = Object.entries(exampleFiles)
+  .sort(([left], [right]) => left.localeCompare(right, 'es', { numeric: true, sensitivity: 'base' }))
   .map(([path, src]) => ({
     src,
     name: decodeURIComponent(path.split('/').pop().replace(/\.[^.]+$/, ''))
@@ -85,13 +39,12 @@ const commissionedImages = Object.entries(commissionedFiles)
       .replace(/\s+/g, ' ')
       .trim(),
   }));
-
-if (commissionedImages.length) {
-  commissionedCarousel.innerHTML = commissionedImages.map(({ src, name }, index) => `
-    <button class="commissioned-card" type="button" data-commissioned-index="${index}" aria-label="Ampliar ${name}">
+if (examples.length) {
+  examplesCarousel.innerHTML = examples.map(({ src, name }) => `
+    <figure class="commissioned-card">
       <img src="${src}" alt="${name}" loading="lazy" draggable="false">
-    </button>`).join('');
-  commissionedCarousel.querySelectorAll('.commissioned-card img').forEach(image => {
+    </figure>`).join('');
+  examplesCarousel.querySelectorAll('.commissioned-card img').forEach(image => {
     const setCardRatio = () => {
       if (image.naturalWidth && image.naturalHeight) {
         image.closest('.commissioned-card').style.setProperty('--image-ratio', image.naturalWidth / image.naturalHeight);
@@ -101,101 +54,66 @@ if (commissionedImages.length) {
     setCardRatio();
   });
 } else {
-  commissionedCarousel.innerHTML = '<p class="commissioned-empty">Añade tus fotos a la carpeta <code>src/bajo-encargo</code> para mostrarlas aquí.</p>';
+  examplesCarousel.innerHTML = '<p class="commissioned-empty">Añade imágenes a <code>src/ejemplos</code> para mostrarlas aquí.</p>';
 }
-
-function openCommissionedImage(index) {
-  const image = commissionedImages[index];
-  if (!image) return;
-  document.querySelector('#commissioned-dialog-image').src = image.src;
-  document.querySelector('#commissioned-dialog-image').alt = image.name;
-  document.querySelector('#commissioned-dialog-title').textContent = image.name;
-  document.querySelector('#commissioned-dialog-order').href = makeWhatsApp(
-    `Hola, he visto la imagen «${image.name}» en la sección Bajo encargo y me gustaría pedir presupuesto.`,
-  );
-  commissionedDialog.showModal();
-}
-
-commissionedCarousel.addEventListener('click', event => {
-  if (carouselDragged) {
-    carouselDragged = false;
-    event.preventDefault();
-    return;
-  }
-  const card = event.target.closest('[data-commissioned-index]');
-  if (card) openCommissionedImage(Number(card.dataset.commissionedIndex));
-});
-commissionedCarousel.addEventListener('pointerdown', event => {
-  if (event.button !== 0) return;
-  if (carouselInertiaFrame) cancelAnimationFrame(carouselInertiaFrame);
-  carouselInertiaFrame = 0;
-  carouselPointerType = event.pointerType;
+const examplesDialog = document.querySelector('#examples-dialog');
+const examplesDialogImage = document.querySelector('#examples-dialog-image');
+let carouselPointerId = null;
+let carouselStartX = 0;
+let carouselStartScroll = 0;
+let carouselDragged = false;
+examplesCarousel.addEventListener('pointerdown', event => {
+  if (event.button !== 0 || event.pointerType !== 'mouse') return;
   carouselPointerId = event.pointerId;
   carouselStartX = event.clientX;
-  carouselStartScroll = commissionedCarousel.scrollLeft;
-  carouselLastX = event.clientX;
-  carouselLastTime = event.timeStamp;
-  carouselVelocity = 0;
+  carouselStartScroll = examplesCarousel.scrollLeft;
   carouselDragged = false;
-  if (event.pointerType === 'mouse') commissionedCarousel.setPointerCapture(event.pointerId);
+  examplesCarousel.setPointerCapture(event.pointerId);
 });
-commissionedCarousel.addEventListener('pointermove', event => {
+examplesCarousel.addEventListener('pointermove', event => {
   if (event.pointerId !== carouselPointerId) return;
   const distance = event.clientX - carouselStartX;
-  if (Math.abs(distance) > 5) {
-    carouselDragged = true;
-    if (event.pointerType === 'touch') return;
-    commissionedCarousel.classList.add('is-dragging');
-    commissionedCarousel.scrollLeft = carouselStartScroll - distance;
-  }
-  const elapsed = event.timeStamp - carouselLastTime;
-  if (elapsed > 0 && elapsed < 100) {
-    const instantVelocity = -(event.clientX - carouselLastX) / elapsed;
-    carouselVelocity = carouselVelocity * 0.35 + instantVelocity * 0.65;
-  }
-  carouselLastX = event.clientX;
-  carouselLastTime = event.timeStamp;
+  if (Math.abs(distance) < 5) return;
+  carouselDragged = true;
+  examplesCarousel.classList.add('is-dragging');
+  examplesCarousel.scrollLeft = carouselStartScroll - distance;
 });
-function finishCarouselDrag(event) {
+function finishExamplesDrag(event) {
   if (event.pointerId !== carouselPointerId) return;
   carouselPointerId = null;
-  commissionedCarousel.classList.remove('is-dragging');
-  if (event.type === 'pointerup' && carouselPointerType === 'mouse' && carouselDragged) {
-    let previousTime = 0;
-    const glide = time => {
-      if (!previousTime) previousTime = time;
-      const elapsed = Math.min(time - previousTime, 32);
-      previousTime = time;
-      commissionedCarousel.scrollLeft += carouselVelocity * elapsed;
-      carouselVelocity *= Math.pow(0.92, elapsed / 16);
-      if (Math.abs(carouselVelocity) > 0.015) carouselInertiaFrame = requestAnimationFrame(glide);
-      else carouselInertiaFrame = 0;
-    };
-    carouselInertiaFrame = requestAnimationFrame(glide);
-  }
-  if (carouselDragged) window.setTimeout(() => { carouselDragged = false; }, 500);
+  examplesCarousel.classList.remove('is-dragging');
+  if (carouselDragged) window.setTimeout(() => { carouselDragged = false; }, 0);
 }
-commissionedCarousel.addEventListener('pointerup', finishCarouselDrag);
-commissionedCarousel.addEventListener('pointercancel', finishCarouselDrag);
-commissionedCarousel.addEventListener('contextmenu', event => event.preventDefault());
-document.querySelector('.dialog-close').addEventListener('click', () => commissionedDialog.close());
-commissionedDialog.addEventListener('click', event => {
-  if (event.target === commissionedDialog) commissionedDialog.close();
+examplesCarousel.addEventListener('pointerup', finishExamplesDrag);
+examplesCarousel.addEventListener('pointercancel', finishExamplesDrag);
+examplesCarousel.addEventListener('click', event => {
+  if (carouselDragged) {
+    event.preventDefault();
+    event.stopPropagation();
+    carouselDragged = false;
+    return;
+  }
+  const image = event.target.closest('.commissioned-card img');
+  if (!image) return;
+  examplesDialogImage.src = image.src;
+  examplesDialogImage.alt = image.alt;
+  examplesDialog.showModal();
 });
-document.querySelector('.carousel-prev').addEventListener('click', () => {
-  commissionedCarousel.scrollBy({ left: -commissionedCarousel.clientWidth * 0.8, behavior: 'smooth' });
+document.querySelector('#examples-dialog-close').addEventListener('click', () => examplesDialog.close());
+examplesDialog.addEventListener('click', event => {
+  if (event.target === examplesDialog) examplesDialog.close();
 });
-document.querySelector('.carousel-next').addEventListener('click', () => {
-  commissionedCarousel.scrollBy({ left: commissionedCarousel.clientWidth * 0.8, behavior: 'smooth' });
+document.querySelector('#examples-prev').addEventListener('click', () => {
+  examplesCarousel.scrollBy({ left: -examplesCarousel.clientWidth * 0.8, behavior: 'smooth' });
 });
-
-const mahitoCanvas = document.querySelector('#mahito-canvas');
-const mahitoContext = mahitoCanvas.getContext('2d', { willReadFrequently: true });
-const mahitoImage = new Image();
-mahitoImage.src = `${import.meta.env.BASE_URL}images/18_Mahito_cuadro.png`;
+document.querySelector('#examples-next').addEventListener('click', () => {
+  examplesCarousel.scrollBy({ left: examplesCarousel.clientWidth * 0.8, behavior: 'smooth' });
+});
 const filamentSelections = {
   frame: filamentColors.findIndex(color => color.name === 'Ash'),
   art: filamentColors.findIndex(color => color.name === 'Lavender'),
+  figure: filamentColors.findIndex(color => color.name === 'Lavender'),
+  piece: filamentColors.findIndex(color => color.name === 'Ash'),
 };
 let mahitoBasePixels;
 let mahitoColorMask;
@@ -207,7 +125,8 @@ function showFilament(region, index) {
   carousel.querySelector('.filament-swatch').style.backgroundColor = color.hex;
   carousel.querySelector('.filament-name').textContent = color.name;
   carousel.querySelector('.filament-index').textContent = `${filamentSelections[region] + 1} / ${colors.length}`;
-  updateMahitoPreview();
+  if (region === 'frame' || region === 'art') updateMahitoPreview();
+  else updateShowcasePreview(region);
 }
 document.querySelectorAll('.filament-carousel').forEach(carousel => {
   const region = carousel.dataset.filament;
@@ -241,6 +160,56 @@ document.querySelectorAll('.filament-carousel').forEach(carousel => {
 function hexRgb(hex) {
   return [1, 3, 5].map(offset => parseInt(hex.slice(offset, offset + 2), 16));
 }
+function litFilamentColor(hex, luminance) {
+  const color = hexRgb(hex);
+  const baseValue = Math.max(...color) / 255;
+  const light = 0.28 + 0.72 * luminance;
+  const reflection = (1 - baseValue) * (20 + 115 * Math.pow(luminance, 1.4));
+  return color.map(channel => Math.min(255, Math.round(channel * light + reflection)));
+}
+function prepareShowcasePreview(region) {
+  const preview = showcasePreviews[region];
+  const { image, canvas } = preview;
+  if (!image.naturalWidth || !canvas) return;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  canvas.width = image.naturalWidth;
+  canvas.height = image.naturalHeight;
+  context.drawImage(image, 0, 0);
+  preview.pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+  const width = canvas.width;
+  const height = canvas.height;
+  preview.coverage = new Uint8Array(width * height);
+  for (let pixel = 0; pixel < preview.coverage.length; pixel++) preview.coverage[pixel] = preview.pixels[pixel * 4 + 3];
+  updateShowcasePreview(region);
+}
+function updateShowcasePreview(region) {
+  const preview = showcasePreviews[region];
+  if (!preview?.pixels || !preview.coverage) return;
+  const context = preview.canvas.getContext('2d', { willReadFrequently: true });
+  const pixels = new Uint8ClampedArray(preview.pixels.length);
+  const backdrop = [246, 242, 232];
+  const pixelCount = preview.coverage.length;
+  for (let pixel = 0; pixel < pixelCount; pixel++) {
+    const coverage = preview.coverage[pixel] / 255;
+    const offset = pixel * 4;
+    pixels[offset + 3] = 255;
+    if (!coverage) {
+      for (let channel = 0; channel < 3; channel++) pixels[offset + channel] = backdrop[channel];
+      continue;
+    }
+    const luminance = (preview.pixels[offset] * 0.2126 + preview.pixels[offset + 1] * 0.7152 + preview.pixels[offset + 2] * 0.0722) / 255;
+    const litColor = litFilamentColor(filamentColors[filamentSelections[region]].hex, luminance);
+    for (let channel = 0; channel < 3; channel++) {
+      const tinted = litColor[channel];
+      pixels[offset + channel] = Math.round(backdrop[channel] * (1 - coverage) + tinted * coverage);
+    }
+  }
+  context.putImageData(new ImageData(pixels, preview.canvas.width, preview.canvas.height), 0, 0);
+}
+Object.keys(showcasePreviews).forEach(region => {
+  const { image } = showcasePreviews[region];
+  image.addEventListener('load', () => prepareShowcasePreview(region));
+});
 function pointInPolygon(px, py, points) {
   let inside = false;
   for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
@@ -285,8 +254,8 @@ function prepareMahitoPreview() {
 }
 function updateMahitoPreview() {
   if (!mahitoBasePixels || !mahitoColorMask) return;
-  const frame = hexRgb(filamentColors[filamentSelections.frame].hex);
-  const art = hexRgb(filamentColors[filamentSelections.art].hex);
+  const frame = filamentColors[filamentSelections.frame].hex;
+  const art = filamentColors[filamentSelections.art].hex;
   const data = new Uint8ClampedArray(mahitoBasePixels);
   for (let index = 0; index < mahitoColorMask.length; index++) {
     const region = mahitoColorMask[index];
@@ -294,18 +263,27 @@ function updateMahitoPreview() {
     const offset = index * 4;
     if (region === 1) {
       const luminance = (mahitoBasePixels[offset] * 0.2126 + mahitoBasePixels[offset + 1] * 0.7152 + mahitoBasePixels[offset + 2] * 0.0722) / 255;
-      const shade = 0.4 + luminance * 0.6;
-      for (let channel = 0; channel < 3; channel++) data[offset + channel] = Math.round(frame[channel] * shade);
+      const shadedColor = litFilamentColor(frame, luminance);
+      for (let channel = 0; channel < 3; channel++) data[offset + channel] = shadedColor[channel];
     } else {
-      for (let channel = 0; channel < 3; channel++) {
-        data[offset + channel] = Math.round(mahitoBasePixels[offset + channel] * 0.52 + art[channel] * 0.48);
-      }
+      const luminance = (mahitoBasePixels[offset] * 0.2126 + mahitoBasePixels[offset + 1] * 0.7152 + mahitoBasePixels[offset + 2] * 0.0722) / 255;
+      const shadedColor = litFilamentColor(art, luminance);
+      for (let channel = 0; channel < 3; channel++) data[offset + channel] = shadedColor[channel];
     }
   }
   mahitoContext.putImageData(new ImageData(data, mahitoCanvas.width, mahitoCanvas.height), 0, 0);
 }
 mahitoImage.addEventListener('load', prepareMahitoPreview);
 
+const viewerEl = document.querySelector('#three-viewer');
+const viewerHint = document.querySelector('#viewer-hint');
+let activeProduct = products[0];
+let scene, camera, renderer, controls, currentModel;
+function updateViewerHint() {
+  viewerHint.textContent = window.matchMedia('(pointer: coarse)').matches ? 'Arrastra para girar · Pellizca para acercar' : 'Arrastra para girar · Desplaza para acercar';
+}
+updateViewerHint();
+window.addEventListener('resize', updateViewerHint);
 function initViewer() {
   scene = new THREE.Scene(); scene.background = new THREE.Color('#211e19');
   camera = new THREE.PerspectiveCamera(35, viewerEl.clientWidth / viewerEl.clientHeight, 0.1, 1000); camera.position.set(5,4,7);
@@ -322,34 +300,25 @@ function initViewer() {
 }
 function resizeViewer(){ if(!renderer) return; const w=viewerEl.clientWidth,h=viewerEl.clientHeight; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); }
 function animate(){ requestAnimationFrame(animate); controls?.update(); renderer?.render(scene,camera); }
-function proceduralModel(p) {
-  const mat = new THREE.MeshStandardMaterial({color:p.color, metalness:.16, roughness:.38});
+function proceduralModel(product) {
+  const material = new THREE.MeshStandardMaterial({ color: product.color, metalness: 0.16, roughness: 0.38 });
   const group = new THREE.Group();
-  const add = (geo,x,y,z,sx=1,sy=1,sz=1,material=mat) => { const m=new THREE.Mesh(geo,material); m.position.set(x,y,z); m.scale.set(sx,sy,sz); m.castShadow=true; m.receiveShadow=true; group.add(m); return m; };
-  if(p.shape==='dragon') {
-    for(let i=0;i<7;i++){ const t=i/6; add(new THREE.SphereGeometry(.42,32,24),Math.sin(t*3.2)*.45, -.6+t*1.25,Math.cos(t*3.2)*.35,1-t*.18,.72,1-t*.18); }
-    add(new THREE.SphereGeometry(.35,32,24),.15,.85,.05,1.25,.9,1.05);
-    for(let s of [-1,1]) { add(new THREE.ConeGeometry(.12,.5,16),.0+s*.28,1.22,.0,.7,1,1); add(new THREE.ConeGeometry(.24,.8,3),s*.65,.25,0,1,.25,1); }
-  } else if(p.shape==='flower') {
-    add(new THREE.CylinderGeometry(.07,.09,1.7,24),0,-.35,0); add(new THREE.SphereGeometry(.22,24,16),0,.62,0);
-    for(let i=0;i<9;i++){const a=i*Math.PI*2/9; const pet=add(new THREE.SphereGeometry(.26,24,16),Math.cos(a)*.34,.72+Math.sin(a)*.34,0,1.1,1.65,.65); pet.rotation.z=-a;}
-  } else if(p.shape==='torus') {
-    const tor=add(new THREE.TorusKnotGeometry(.72,.22,180,24,2,3),0,0,0); tor.rotation.x=.4;
-    add(new THREE.TorusGeometry(1.05,.045,12,80),0,0,0).rotation.x=1.15;
-  } else if(p.shape==='vase') {
-    const pts=[]; for(let i=0;i<=30;i++){const t=i/30; pts.push(new THREE.Vector2(.35+.42*Math.sin(t*Math.PI*.92),-1+t*2.1));}
-    add(new THREE.LatheGeometry(pts,64),0,0,0);
-  } else if(p.shape==='stand') {
-    add(new THREE.BoxGeometry(1.6,.18,1.15),0,-.55,0); add(new THREE.BoxGeometry(1.3,.22,.18),0,.12,-.43); add(new THREE.BoxGeometry(.18,.95,.18),-.58,-.05,-.43); add(new THREE.BoxGeometry(.18,.95,.18),.58,-.05,-.43);
-  } else {
-    add(new THREE.CylinderGeometry(.22,.48,1.8,8),0,0,0); add(new THREE.SphereGeometry(.4,24,16),0,1.05,0); add(new THREE.TorusGeometry(.34,.08,12,32),0,-.65,0);
+  const body = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.48, 1.8, 8), material);
+  const top = new THREE.Mesh(new THREE.SphereGeometry(0.4, 24, 16), material);
+  const base = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.08, 12, 32), material);
+  top.position.y = 1.05;
+  base.position.y = -0.65;
+  for (const mesh of [body, top, base]) {
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    group.add(mesh);
   }
   return group;
-}
-function loadProduct(p) {
+}function loadProduct(p) {
   if(!scene) return;
   activeProduct=p; document.querySelector('#viewer-name').textContent=p.name;
-  document.querySelector('#viewer-order').href = makeWhatsApp(`Hola, he visto ${p.name} y me gustaría pedir presupuesto. ¿Me podrías pasar precio?`);
+  document.querySelector('#viewer-index').textContent = `${String(products.indexOf(p) + 1).padStart(2, '0')} / ${String(products.length).padStart(2, '0')}`;
+  document.querySelector('#viewer-order').href = makeWhatsApp(`Hola, he visto ${p.name} y me gustaría consultar este trabajo.`);
   if(currentModel){scene.remove(currentModel); currentModel.traverse(o=>{if(o.geometry)o.geometry.dispose();});}
   if(p.model) {
     const ext=p.model.split('.').pop().toLowerCase(); const loader=ext==='3mf'?new ThreeMFLoader():new STLLoader();
@@ -365,6 +334,12 @@ function loadProduct(p) {
   } else { currentModel=proceduralModel(p); fitModel(currentModel); }
 }
 function fitModel(model){ scene.add(model); const box=new THREE.Box3().setFromObject(model); const center=box.getCenter(new THREE.Vector3()); const size=box.getSize(new THREE.Vector3()); const max=Math.max(size.x,size.y,size.z); const scale=2.6/(max||1); model.scale.setScalar(scale); model.position.sub(center).multiplyScalar(scale); model.position.y-=.15; controls.target.set(0,0,0); camera.position.set(4,3,5); controls.update(); }
-function selectProduct(id){ const p=products.find(x=>x.id===id); if(!p)return; loadProduct(p); document.querySelector('#visor').scrollIntoView({behavior:'smooth'}); }
+function changeViewerProduct(direction) {
+  const currentIndex = products.indexOf(activeProduct);
+  const nextIndex = (currentIndex + direction + products.length) % products.length;
+  loadProduct(products[nextIndex]);
+}
+document.querySelector('#model-prev').addEventListener('click', () => changeViewerProduct(-1));
+document.querySelector('#model-next').addEventListener('click', () => changeViewerProduct(1));
 document.querySelector('#reset-view').addEventListener('click',()=>{ if(!controls)return; camera.position.set(4,3,5); controls.target.set(0,0,0); controls.update(); });
 initViewer();
