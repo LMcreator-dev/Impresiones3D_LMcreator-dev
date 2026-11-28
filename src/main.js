@@ -93,8 +93,9 @@ examplesCarousel.addEventListener('click', event => {
     carouselDragged = false;
     return;
   }
-  const image = event.target.closest('.example-card img');
-  if (!image) return;
+  const card = event.target.closest('.example-card');
+  if (!card) return;
+  const image = card.querySelector('img');
   examplesDialogImage.src = image.src;
   examplesDialogImage.alt = image.alt;
   examplesDialog.showModal();
